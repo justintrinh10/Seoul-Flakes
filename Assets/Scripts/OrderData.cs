@@ -36,9 +36,9 @@ public class OrderData
         return totalVal;
     }
 
-    public void setBingsuOrder(BingsuData BingsuData)
+    public void setBingsuOrder(BingsuData bData)
     {
-        bingsuOrder = BingsuData;
+        bingsuOrder = bData;
     }
 
     public BingsuData getBingsuOrder()

@@ -31,9 +31,34 @@ public class CustomerData
         currentOrder = OrderData;
     }
 
-    public OrderData GetCurrentOrder()
+    public OrderData getOrder()
     {
         return currentOrder;
+    }
+
+    public string getState()
+    {
+        return state;
+    }
+
+    public bool setState(string s)
+    {
+        if (state == s)
+        {
+            return false;
+        }
+        state = s;
+        return true;
+    }
+
+    public string getColor()
+    {
+        return color;
+    }
+
+    public string getAccessory()
+    {
+        return accessory;
     }
 
     public string getOrderPrompt()

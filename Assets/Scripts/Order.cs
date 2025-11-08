@@ -17,6 +17,10 @@ public class Order : MonoBehaviour
 
     public void OrderSpriteSignals()
     {
+        if (orderData.hasTray())
+        {
+            onAddTray?.Invoke();
+        }
         if (orderData.hasCondenseMilk())
             onAddCondensedMilk?.Invoke();
 
@@ -27,7 +31,12 @@ public class Order : MonoBehaviour
     public void createOrder()
     {
         orderData.randomOrder();
-        onAddTray?.Invoke();
+        OrderSpriteSignals();
+    }
+
+    public void createOrder(OrderData oData)
+    {
+        orderData = oData;
         OrderSpriteSignals();
     }
 
@@ -55,6 +64,11 @@ public class Order : MonoBehaviour
     public OrderData GetOrderData() => orderData;
 
     public bool HasBingsu() => bingsu != null;
+
+    public OrderData getOrderData()
+    {
+        return orderData;
+    }
 
     public override bool Equals(object obj)
     {
