@@ -6,12 +6,9 @@ public class BingsuRenderer : MonoBehaviour
     private SpriteRenderer bingsuSprite;
 
     [Header("Sprites for Parts")]
-    public Sprite bowlSprite;
-    public Sprite shavedMilkSprite;
-    public Sprite drizzleSprite;
+    public Spritep baseSprites;
     public Sprite logoSprite;
-    public Sprite[] baseToppingSprites; // Assign in inspector
-    public Sprite[] toppingSprites;     // Assign in inspector
+    public Sprite[] toppingSprites;   
 
     private void OnEnable()
     {

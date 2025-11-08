@@ -661,7 +661,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -3860860316398927885, guid: 5a46076f9f6d74d679d4bb4e59c0ae92, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -872,9 +872,9 @@ MonoBehaviour:
   bowlSprite: {fileID: 5222127748002684979, guid: be594765f58e14486ac7bcc49bba37b7, type: 3}
   shavedMilkSprite: {fileID: 2005194919484217058, guid: a5254a10eaa1543929f6164893d9812b, type: 3}
   drizzleSprite: {fileID: 0}
-  logoSprite: {fileID: -2135684610788040097, guid: f8fd2be24615e4aa282cda503a414c93, type: 3}
   baseToppingSprites:
   - {fileID: 0}
+  logoSprite: {fileID: -2135684610788040097, guid: f8fd2be24615e4aa282cda503a414c93, type: 3}
   toppingSprites: []
 --- !u!1 &1862715326
 GameObject:
@@ -939,7 +939,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -3860860316398927885, guid: 5a46076f9f6d74d679d4bb4e59c0ae92, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -1029,7 +1029,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: -3860860316398927885, guid: 5a46076f9f6d74d679d4bb4e59c0ae92, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

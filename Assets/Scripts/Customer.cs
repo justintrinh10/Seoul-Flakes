@@ -41,6 +41,7 @@ public class Customer : MonoBehaviour
             onStateChange?.Invoke("happy");
             return true;
         }
+        onStateChange?.Invoke("angry");
         return false;
     }
 }
