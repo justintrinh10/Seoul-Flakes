@@ -1,4 +1,5 @@
 using System;
+using System.Data.SqlTypes;
 using UnityEngine;
 
 public class CustomerData
@@ -33,5 +34,12 @@ public class CustomerData
     public OrderData GetCurrentOrder()
     {
         return currentOrder;
+    }
+
+    public string getOrderPrompt()
+    {
+        string prompt = "Can I get a ";
+        prompt += currentOrder.getBingsuOrder().getBingsuDescription();
+        return prompt;
     }
 }

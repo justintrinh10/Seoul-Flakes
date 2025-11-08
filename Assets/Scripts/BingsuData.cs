@@ -16,7 +16,7 @@ public class BingsuData
     private float logoVal = 0.5f;
     private string[] bingsuBaseToppingType = { "strawberry", "mango", "chocolate", "injeolmi", "ube", "pat" };
     private float[] bingsuBaseToppingValues = { 3.0f, 3.0f, 2.0f, 2.5f, 2.5f, 2.0f };
-    private string[] bingsuToppingType = { "tiramisu", "bungeoppang", "mochi", "chocolateBar", "cheeseCake", "matchaIceCream", "vanillaIceCream", "chocolateIceCream", "ubeIceCream" };
+    private string[] bingsuToppingType = { "tiramisu", "bungeoppang", "chocolate bar", "cheese cake", "matcha ice cream", "vanilla ice cream", "chocolate ice cream", "ube ice cream", "mango ice cream" };
     private float[] bingsuToppingValues = { 2.0f, 2.0f, 1.0f, 1.0f, 2.0f, 1.5f, 1.5f, 1.5f, 1.5f };
 
     public BingsuData()
@@ -81,6 +81,27 @@ public class BingsuData
         }
 
         return totalVal;
+    }
+
+    public bool bingsuComplete()
+    {
+        return bowl && shavedMilk && baseTopping && topping && logo;
+    }
+
+    public string getBingsuDescription()
+    {
+        string description = "";
+        if (bingsuComplete())
+        {
+            description += baseToppingType;
+            description += " bingsu with ";
+            description += toppingType;
+            if (drizzle)
+            {
+                description += " and chocolate drizzle";
+            }
+        }
+        return description;
     }
 
     public void setBowl()

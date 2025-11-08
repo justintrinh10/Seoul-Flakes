@@ -4,7 +4,6 @@ public class OrderData
 {
     private BingsuData bingsuOrder;
     private bool tray;
-    private bool condenseMilkCup;
     private bool condenseMilk;
     private float condenseMilkVal = 0.5f;
 
@@ -12,7 +11,6 @@ public class OrderData
     {
         bingsuOrder = new BingsuData();
         tray = false;
-        condenseMilkCup = false;
         condenseMilk = false;
     }
 
@@ -21,7 +19,6 @@ public class OrderData
         bingsuOrder = new BingsuData();
         bingsuOrder.RandomBingsu();
         tray = true;
-        condenseMilkCup = true;
         condenseMilk = true;
     }
 
@@ -54,11 +51,6 @@ public class OrderData
         tray = true;
     }
 
-    public void setCondenseMilkCup()
-    {
-        condenseMilkCup = true;
-    }
-
     public void setCondenseMilk()
     {
         condenseMilk = true;
@@ -67,11 +59,6 @@ public class OrderData
     public bool hasTray()
     {
         return tray;
-    }
-
-    public bool hasCondenseMilkCup()
-    {
-        return condenseMilkCup;
     }
 
     public bool hasCondenseMilk()
@@ -90,7 +77,7 @@ public class OrderData
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(bingsuOrder, tray, condenseMilkCup, condenseMilk);
+        return HashCode.Combine(bingsuOrder, tray, condenseMilk);
     }
 
     public static bool operator ==(OrderData a, OrderData b)
@@ -103,7 +90,6 @@ public class OrderData
 
         return (a.bingsuOrder == b.bingsuOrder &&
                 a.tray == b.tray &&
-                a.condenseMilkCup == b.condenseMilkCup &&
                 a.condenseMilk == b.condenseMilk);
     }
 
@@ -116,7 +102,6 @@ public class OrderData
     {
         bingsuOrder.clearBingsu();
         tray = false;
-        condenseMilkCup = false;
         condenseMilk = false;
     }
 }
