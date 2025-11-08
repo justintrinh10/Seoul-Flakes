@@ -1,16 +1,16 @@
 using System;
 
-public class Order
+public class OrderData
 {
-    private Bingsu bingsuOrder;
+    private BingsuData bingsuOrder;
     private bool tray;
     private bool condenseMilkCup;
     private bool condenseMilk;
     private float condenseMilkVal = 0.5f;
 
-    public Order()
+    public OrderData()
     {
-        bingsuOrder = new Bingsu();
+        bingsuOrder = new BingsuData();
         tray = false;
         condenseMilkCup = false;
         condenseMilk = false;
@@ -18,7 +18,7 @@ public class Order
 
     public void randomOrder()
     {
-        bingsuOrder = new Bingsu();
+        bingsuOrder = new BingsuData();
         bingsuOrder.RandomBingsu();
         tray = true;
         condenseMilkCup = true;
@@ -39,12 +39,12 @@ public class Order
         return totalVal;
     }
 
-    public void setBingsuOrder(Bingsu bingsu)
+    public void setBingsuOrder(BingsuData BingsuData)
     {
-        bingsuOrder = bingsu;
+        bingsuOrder = BingsuData;
     }
 
-    public Bingsu getBingsuOrder()
+    public BingsuData getBingsuOrder()
     {
         return bingsuOrder;
     }
@@ -84,7 +84,7 @@ public class Order
         if (obj == null || GetType() != obj.GetType())
             return false;
 
-        Order other = (Order)obj;
+        OrderData other = (OrderData)obj;
         return this == other;
     }
 
@@ -93,7 +93,7 @@ public class Order
         return HashCode.Combine(bingsuOrder, tray, condenseMilkCup, condenseMilk);
     }
 
-    public static bool operator ==(Order a, Order b)
+    public static bool operator ==(OrderData a, OrderData b)
     {
         if (ReferenceEquals(a, b))
             return true;
@@ -107,7 +107,7 @@ public class Order
                 a.condenseMilk == b.condenseMilk);
     }
 
-    public static bool operator !=(Order a, Order b)
+    public static bool operator !=(OrderData a, OrderData b)
     {
         return !(a == b);
     }

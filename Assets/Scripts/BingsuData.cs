@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class Bingsu
+public class BingsuData
 {
     private bool bowl;
     private bool shavedMilk;
@@ -19,7 +19,7 @@ public class Bingsu
     private string[] bingsuToppingType = { "tiramisu", "bungeoppang", "mochi", "chocolateBar", "cheeseCake", "matchaIceCream", "vanillaIceCream", "chocolateIceCream", "ubeIceCream" };
     private float[] bingsuToppingValues = { 2.0f, 2.0f, 1.0f, 1.0f, 2.0f, 1.5f, 1.5f, 1.5f, 1.5f };
 
-    public Bingsu()
+    public BingsuData()
     {
         bowl = false;
         shavedMilk = false;
@@ -160,7 +160,7 @@ public class Bingsu
         if (obj == null || GetType() != obj.GetType())
             return false;
 
-        Bingsu other = (Bingsu)obj;
+        BingsuData other = (BingsuData)obj;
         return this == other;
     }
 
@@ -169,7 +169,7 @@ public class Bingsu
         return HashCode.Combine(bowl, shavedMilk, baseTopping, baseToppingType, drizzle, topping, toppingType, logo);
     }
 
-    public static bool operator ==(Bingsu a, Bingsu b)
+    public static bool operator ==(BingsuData a, BingsuData b)
     {
         if (ReferenceEquals(a, b))
             return true;
@@ -187,7 +187,7 @@ public class Bingsu
                 a.logo == b.logo);
     }
 
-    public static bool operator !=(Bingsu a, Bingsu b)
+    public static bool operator !=(BingsuData a, BingsuData b)
     {
         return !(a == b);
     }

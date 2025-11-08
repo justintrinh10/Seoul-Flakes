@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 
-public class Customer
+public class CustomerData
 {
-    private Order currentOrder;
+    private OrderData currentOrder;
     private string state;
     private string[] allStates = { "angry", "normal", "happy" };
     private string color;
@@ -11,9 +11,9 @@ public class Customer
     private string accessory;
     private string[] allAccessory = { "ninjaHeadBand", "balloon" , "sprout", "crown", "devilHorn", "detectiveHat", "bandana", "cowboyHat", "topHat", "chefHat"};
 
-    public Customer()
+    public CustomerData()
     {
-        currentOrder = new Order();
+        currentOrder = new OrderData();
         state = allStates[1];
         color = allColors[UnityEngine.Random.Range(0, allColors.Length)];
         accessory = allAccessory[UnityEngine.Random.Range(0, allAccessory.Length)];
@@ -21,16 +21,16 @@ public class Customer
 
     public void randomCustomer()
     {
-        currentOrder = new Order();
+        currentOrder = new OrderData();
         currentOrder.randomOrder();
     }
 
-    public void setOrder(Order order)
+    public void setOrder(OrderData OrderData)
     {
-        currentOrder = order;
+        currentOrder = OrderData;
     }
 
-    public Order GetCurrentOrder()
+    public OrderData GetCurrentOrder()
     {
         return currentOrder;
     }
