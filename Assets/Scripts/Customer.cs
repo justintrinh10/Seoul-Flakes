@@ -7,9 +7,9 @@ public class Customer
     private string state;
     private string[] allStates = { "angry", "normal", "happy" };
     private string color;
-    private string[] allColors = { };
+    private string[] allColors = { "red", "orange", "yellow", "green", "blue", "purple", "pink" };
     private string accessory;
-    private string[] allAccessory = { };
+    private string[] allAccessory = { "ninjaHeadBand", "balloon" , "sprout", "crown", "devilHorn", "detectiveHat", "bandana", "cowboyHat", "topHat", "chefHat"};
 
     public Customer()
     {
