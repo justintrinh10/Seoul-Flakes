@@ -1,9 +1,6 @@
 using System;
-using System.ComponentModel;
-using Unity.Burst;
-using UnityEngine;
 
-public class Bingsu : MonoBehaviour
+public class Bingsu
 {
     private bool bowl;
     private bool shavedMilk;
@@ -16,7 +13,7 @@ public class Bingsu : MonoBehaviour
     private string[] bingsuBaseToppingType = { "strawberry", "mango", "chocolate", "injeolmi", "ube", "pat" };
     private string[] bingsuToppingType = { "tiramisu", "bungeoppang", "mochi", "chocolateBar", "cheeseCake", "matchaIceCream", "vanillaIceCream", "chocolateIceCream", "ubeIceCream" };
 
-    public void Ready()
+    public Bingsu()
     {
         bowl = false;
         shavedMilk = false;
@@ -159,5 +156,5 @@ public class Bingsu : MonoBehaviour
         topping = false;
         toppingType = "";
         logo = false;
-    } 
+    }
 }
