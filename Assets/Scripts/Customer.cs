@@ -9,9 +9,14 @@ public class Customer
         currentOrder = new Order();
     }
 
-    public void PlaceRandomOrder()
+    public void randomCustomerOrder()
     {
         currentOrder.randomOrder();
+    }
+
+    public void setOrder(Order order)
+    {
+        currentOrder = order;
     }
 
     public Order GetCurrentOrder()

@@ -6,6 +6,7 @@ public class Order
     private bool tray;
     private bool condenseMilkCup;
     private bool condenseMilk;
+    private float condenseMilkVal = 0.5f;
 
     public Order()
     {
@@ -22,6 +23,25 @@ public class Order
         tray = true;
         condenseMilkCup = true;
         condenseMilk = true;
+    }
+
+    public float calcVal()
+    {
+        float totalVal = 0.0f;
+
+        totalVal += bingsuOrder.calcVal();
+
+        if (condenseMilk)
+        {
+            totalVal += condenseMilkVal;
+        }
+
+        return totalVal;
+    }
+
+    public void setBingsuOrder(Bingsu bingsu)
+    {
+        bingsuOrder = bingsu;
     }
 
     public Bingsu getBingsuOrder()
