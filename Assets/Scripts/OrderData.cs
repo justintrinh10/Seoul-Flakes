@@ -46,14 +46,24 @@ public class OrderData
         return bingsuOrder;
     }
 
-    public void setTray()
+    public bool setTray()
     {
-        tray = true;
+        if (!tray)
+        {
+            tray = true;
+            return true;
+        }
+        return false;
     }
 
-    public void setCondenseMilk()
+    public bool setCondenseMilk()
     {
-        condenseMilk = true;
+        if (tray && !condenseMilk)
+        {
+            condenseMilk = true;
+            return true;
+        }
+        return false;
     }
 
     public bool hasTray()

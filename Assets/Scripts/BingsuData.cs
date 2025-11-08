@@ -109,31 +109,56 @@ public class BingsuData
         bowl = true;
     }
 
-    public void setShavedMilk()
+    public bool setShavedMilk()
     {
-        shavedMilk = true;
+        if (bowl && !shavedMilk)
+        {
+            shavedMilk = true;
+            return true;
+        }
+        return false;
     }
 
-    public void setBaseTopping(string type)
+    public bool setBaseTopping(string type)
     {
-        baseTopping = true;
-        baseToppingType = type;
+        if (bowl && shavedMilk && !baseTopping)
+        {
+            baseTopping = true;
+            baseToppingType = type;
+            return true;
+        }
+        return false;
     }
 
-    public void setDrizzle()
+    public bool setDrizzle()
     {
-        drizzle = true;
+        if (bowl && shavedMilk && baseTopping && !drizzle)
+        {
+            drizzle = true;
+            return true;
+        }
+        return false;
     }
 
-    public void setTopping(string type)
+    public bool setTopping(string type)
     {
-        topping = true;
-        toppingType = type;
+        if(bowl && shavedMilk && baseTopping && !topping)
+        {
+            topping = true;
+            toppingType = type;
+            return true;
+        }
+        return false;
     }
 
-    public void setLogo()
+    public bool setLogo()
     {
-        logo = true;
+        if (bowl && shavedMilk && baseTopping && topping && !logo)
+        {
+            logo = true;
+            return true;
+        }
+        return false;
     }
 
     public bool hasBowl()
