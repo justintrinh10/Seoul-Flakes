@@ -1,16 +1,21 @@
-using UnityEngine;
+using System;
 
-public class Customer : MonoBehaviour
+public class Customer
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private Order currentOrder;
+
+    public Customer()
     {
-        
+        currentOrder = new Order();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlaceRandomOrder()
     {
-        
+        currentOrder.randomOrder();
+    }
+
+    public Order GetCurrentOrder()
+    {
+        return currentOrder;
     }
 }
