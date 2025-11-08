@@ -104,9 +104,14 @@ public class BingsuData
         return description;
     }
 
-    public void setBowl()
+    public bool setBowl()
     {
-        bowl = true;
+        if (!bowl)
+        {
+            bowl = true;
+            return true;
+        }
+        return false;
     }
 
     public bool setShavedMilk()

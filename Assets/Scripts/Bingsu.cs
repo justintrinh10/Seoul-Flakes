@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class Bingsu : MonoBehaviour
@@ -15,10 +16,58 @@ public class Bingsu : MonoBehaviour
     void Start()
     {
         bingsuData = new BingsuData();
-        bingsuData.setBowl();
-        onAddBowl?.Invoke();
     }
 
+    public void bingsuSpriteSignals()
+    {
+        if (bingsuData.hasBowl())
+        {
+            onAddBowl?.Invoke();
+        }
+        if (bingsuData.hasShavedMilk())
+        {
+            onAddShavedMilk?.Invoke();
+        }
+        if (bingsuData.hasBaseTopping())
+        {
+            onAddBaseTopping?.Invoke(bingsuData.getBaseToppingType());
+        }
+        if (bingsuData.hasDrizzle())
+        {
+            onAddDrizzle?.Invoke();
+        }
+        if (bingsuData.hasTopping())
+        {
+            onAddTopping?.Invoke(bingsuData.getToppingType());
+        }
+        if (bingsuData.hasLogo())
+        {
+            onAddLogo?.Invoke();
+        }
+    }
+
+    public void createRandomBingsu()
+    {
+        bingsuData.RandomBingsu();
+        bingsuSpriteSignals();
+    }
+
+    public void createBingsu(BingsuData data)
+    {
+        bingsuData = data;
+        bingsuSpriteSignals();
+    }
+
+    public bool addBowl()
+    {
+        if (bingsuData.setBowl())
+        {
+            onAddBowl?.Invoke();
+            return true;
+        }
+        return false;
+    }
+    
     public bool addShavedMilk()
     {
         if (bingsuData.setShavedMilk())
