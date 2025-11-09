@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class WorkspaceManager : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class WorkspaceManager : MonoBehaviour
     public Canvas[] workspaceCanvases;   // Assign LeftCanvas, CenterCanvas, RightCanvas
 
     private int currentIndex = 1;        // Start at center workspace
+
+    // Event fired when workspace changes. Parameter is the new currentIndex (0=Left,1=Center,2=Right)
+    public event Action<int> onWorkspaceChanged;
 
     /// <summary>
     /// Returns the current workspace index: 0=Left, 1=Center, 2=Right (if assigned in that order).
@@ -58,5 +62,8 @@ public class WorkspaceManager : MonoBehaviour
                 workspaceCanvases[i].gameObject.SetActive(isActive);
             }
         }
+
+        // notify listeners
+        onWorkspaceChanged?.Invoke(currentIndex);
     }
 }

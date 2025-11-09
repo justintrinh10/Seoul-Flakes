@@ -72,6 +72,31 @@ public class GameManager : MonoBehaviour
         StartCoroutine(HandleCustomerExit(index, correct));
     }
 
+    /// <summary>
+    /// Attempt to deliver an order to a specific Customer instance.
+    /// Returns true if the customer accepted the order (matched their request), false otherwise.
+    /// </summary>
+    public bool TryDeliverOrderToCustomer(Customer customer, Order order)
+    {
+        if (customer == null || order == null) return false;
+
+        int found = -1;
+        for (int i = 0; i < numCustomer; i++)
+        {
+            if (currentCustomers[i] == customer)
+            {
+                found = i;
+                break;
+            }
+        }
+
+        if (found < 0) return false;
+
+        bool correct = customer.DeliverOrder(order);
+        StartCoroutine(HandleCustomerExit(found, correct));
+        return correct;
+    }
+
     private IEnumerator HandleCustomerExit(int index, bool correct)
     {
         string mood = correct ? "happy" : "angry";

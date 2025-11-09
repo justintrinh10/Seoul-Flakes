@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Customer : MonoBehaviour
+public class Customer : MonoBehaviour, IPointerClickHandler
 {
     private CustomerData customerData;
 
@@ -117,4 +118,25 @@ public class Customer : MonoBehaviour
     }
 
     public CustomerData GetCustomerData() => customerData;
+
+    private void OnMouseDown()
+    {
+        // Backwards-compatible mouse click support (works without EventSystem)
+        TryDeliverToCurrentOrder();
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        // Support clicks routed through the EventSystem (useful for touch and UI raycasters)
+        TryDeliverToCurrentOrder();
+    }
+
+    private void TryDeliverToCurrentOrder()
+    {
+        OrderCreationManager ocm = FindObjectOfType<OrderCreationManager>();
+        if (ocm != null)
+        {
+            ocm.DeliverCurrentOrderToCustomer(this);
+        }
+    }
 }

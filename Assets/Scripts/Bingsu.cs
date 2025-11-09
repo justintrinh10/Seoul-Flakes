@@ -13,9 +13,12 @@ public class Bingsu : MonoBehaviour
     public static event Action onClearBingsu;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        bingsuData = new BingsuData();
+        // Ensure bingsuData is initialized as early as possible so other objects
+        // can call into this Bingsu (eg. displayOrder) immediately after Instantiate.
+        if (bingsuData == null)
+            bingsuData = new BingsuData();
         onClearBingsu?.Invoke();
     }
 

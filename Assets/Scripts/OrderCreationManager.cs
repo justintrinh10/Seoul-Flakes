@@ -167,33 +167,7 @@ public class OrderCreationManager : MonoBehaviour
             onError?.Invoke();
             return;
         }
-
-        // If a ShavedIceMachine instance is available, start its minigame and add shaved milk on completion.
-        if (shavedIceMachine != null)
-        {
-            // prepare the machine
-            shavedIceMachine.ResetBowl();
-            shavedIceMachine.StopMinigame();
-
-            // remove previous listeners and add a one-shot listener
-            shavedIceMachine.OnFillComplete.RemoveAllListeners();
-            shavedIceMachine.OnFillComplete.AddListener(() => {
-                if (currentBingsu.addShavedMilk())
-                {
-                    displayOrder();
-                    onPlaceFood?.Invoke();
-                }
-                else
-                {
-                    onError?.Invoke();
-                }
-            });
-
-            shavedIceMachine.StartMinigame();
-            return;
-        }
-
-        // fallback: try to add shaved milk directly
+        // Direct behavior: add shaved milk immediately (no minigame)
         if (currentBingsu.addShavedMilk())
         {
             displayOrder();
@@ -338,26 +312,7 @@ public class OrderCreationManager : MonoBehaviour
             onError?.Invoke();
             return;
         }
-
-        if (bungeoppangMinigame != null)
-        {
-            // start the bungeoppang minigame; it will call back OnBungeoppangMinigameComplete via UnityEvent
-            bungeoppangMinigame.OnMinigameComplete.RemoveAllListeners();
-            bungeoppangMinigame.OnMinigameComplete.AddListener(() => {
-                if (currentBingsu.addTopping("bungeoppang"))
-                {
-                    displayOrder();
-                    onPlaceFood?.Invoke();
-                }
-                else
-                {
-                    onError?.Invoke();
-                }
-            });
-            bungeoppangMinigame.StartMinigame();
-            return;
-        }
-
+        // Direct behavior: add bungeoppang topping immediately (no minigame)
         if (currentBingsu.addTopping("bungeoppang"))
         {
             displayOrder();
@@ -410,5 +365,53 @@ public class OrderCreationManager : MonoBehaviour
     {
         currentOrder.OrderSpriteSignals();
         currentBingsu.bingsuSpriteSignals();
+    }
+
+    /// <summary>
+    /// Called by a Customer (or other caller) to attempt delivering the currently-built order to that customer.
+    /// This will locate the GameManager and ask it to deliver by customer reference. If delivery is attempted
+    /// we create a fresh order afterwards.
+    /// </summary>
+    public void DeliverCurrentOrderToCustomer(Customer customer)
+    {
+        if (customer == null)
+        {
+            onError?.Invoke();
+            return;
+        }
+
+        if (currentOrder == null)
+        {
+            Debug.LogWarning("OrderCreationManager.DeliverCurrentOrderToCustomer: No current order to deliver.");
+            onError?.Invoke();
+            return;
+        }
+
+        GameManager gm = FindObjectOfType<GameManager>();
+        if (gm == null)
+        {
+            Debug.LogWarning("OrderCreationManager.DeliverCurrentOrderToCustomer: No GameManager found in scene.");
+            onError?.Invoke();
+            return;
+        }
+
+        bool accepted = gm.TryDeliverOrderToCustomer(customer, currentOrder);
+
+        // Remove the current UI order regardless of correctness and start a fresh one
+        if (currentOrder != null)
+            Destroy(currentOrder.gameObject);
+        if (currentBingsu != null)
+            Destroy(currentBingsu.gameObject);
+
+        currentOrder = null;
+        currentBingsu = null;
+
+        // Create a new empty order for next customer
+        CreateNewOrder();
+
+        if (accepted)
+            onPlaceFood?.Invoke();
+        else
+            onError?.Invoke();
     }
 }

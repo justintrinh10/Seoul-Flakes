@@ -31,7 +31,23 @@ public class CustomerDialogueBox : MonoBehaviour
     [SerializeField] private bool debugMode = false;
 
     private bool isFadingOut = false;
-    private float dialogueScale = 1f;
+    [SerializeField]
+    private float dialogueScale = 0.15f;
+    // captured prefab/editor scale (used as a sensible default if designer set transform scale)
+    private float prefabScale = 0.15f;
+
+    private void Awake()
+    {
+        // If the designer has set a non-zero transform scale in the prefab/inspector,
+        // prefer that as the default dialogue scale so changing the prefab scale works.
+        if (transform.localScale.sqrMagnitude > 0.000001f)
+        {
+            prefabScale = transform.localScale.x;
+            // Only override dialogueScale if it's still the default or very small
+            if (Mathf.Approximately(dialogueScale, 0.15f) || dialogueScale <= 0f)
+                dialogueScale = prefabScale;
+        }
+    }
     private bool dialogueInitialized = false;
 
     void Start()
@@ -64,7 +80,10 @@ public class CustomerDialogueBox : MonoBehaviour
 
         sr.sortingLayerName = "Customer";
         sr.sortingOrder = order;
-        sr.transform.localScale = Vector3.one; // ensure full size
+        // Respect the dialogue scale so editor changes take effect. If dialogueScale
+        // isn't set yet, fall back to prefabScale.
+        float useScale = (dialogueScale > 0f) ? dialogueScale : prefabScale;
+        sr.transform.localScale = Vector3.one * useScale;
         return sr;
     }
 
@@ -115,8 +134,8 @@ public class CustomerDialogueBox : MonoBehaviour
             {
                 baseIconRenderer.sprite = baseSpriteFound;
                 baseIconRenderer.enabled = true;
-                baseIconRenderer.transform.localScale = Vector3.one;
-                baseIconRenderer.transform.localPosition = baseIconOffset;
+                baseIconRenderer.transform.localScale = Vector3.one * 0.6f * dialogueScale;
+                baseIconRenderer.transform.localPosition = baseIconOffset * dialogueScale;
             }
             else if (debugMode)
             {
@@ -135,8 +154,8 @@ public class CustomerDialogueBox : MonoBehaviour
             {
                 toppingIconRenderer.sprite = toppingSpriteFound;
                 toppingIconRenderer.enabled = true;
-                toppingIconRenderer.transform.localScale = Vector3.one;
-                toppingIconRenderer.transform.localPosition = toppingIconOffset;
+                toppingIconRenderer.transform.localScale = Vector3.one * 0.6f * dialogueScale;
+                toppingIconRenderer.transform.localPosition = toppingIconOffset * dialogueScale;
             }
             else if (debugMode)
             {
@@ -153,18 +172,21 @@ public class CustomerDialogueBox : MonoBehaviour
             {
                 drizzleIconRenderer.sprite = drizzleSprite;
                 drizzleIconRenderer.enabled = true;
-                drizzleIconRenderer.transform.localScale = Vector3.one;
-                drizzleIconRenderer.transform.localPosition = drizzleIconOffset;
+                drizzleIconRenderer.transform.localScale = Vector3.one * 0.6f * dialogueScale;
+                drizzleIconRenderer.transform.localPosition = drizzleIconOffset * dialogueScale;
             }
-            drizzleIconRenderer.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-            toppingIconRenderer.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-            baseIconRenderer.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-            textBoxRenderer.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
-            drizzleIconRenderer.transform.position = drizzleIconOffset + transform.position;
-            toppingIconRenderer.transform.position = toppingIconOffset + transform.position;
-            toppingIconRenderer.transform.position -= new Vector3(0.6f, 0f, 0f);
-            baseIconRenderer.transform.position = baseIconOffset + transform.position;
-            baseIconRenderer.transform.position += new Vector3(0.6f, 0f, 0f);
+            // Apply scaled sizes/positions relative to dialogueScale so prefab scale and
+            // caller-provided scale are respected.
+            float iconScale = 0.6f * dialogueScale;
+            float textBoxScale = 1.2f * dialogueScale;
+            drizzleIconRenderer.transform.localScale = Vector3.one * iconScale;
+            toppingIconRenderer.transform.localScale = Vector3.one * iconScale;
+            baseIconRenderer.transform.localScale = Vector3.one * iconScale;
+            textBoxRenderer.transform.localScale = Vector3.one * textBoxScale;
+
+            drizzleIconRenderer.transform.position = transform.position + (drizzleIconOffset * dialogueScale);
+            toppingIconRenderer.transform.position = transform.position + (toppingIconOffset * dialogueScale) - new Vector3(0.6f * dialogueScale, 0f, 0f);
+            baseIconRenderer.transform.position = transform.position + (baseIconOffset * dialogueScale) + new Vector3(0.6f * dialogueScale, 0f, 0f);
         }
     }
 

@@ -51,10 +51,11 @@ public class BingsuRenderer : MonoBehaviour
 
     private void Start()
     {
-        bingsuParent = transform.parent.GetComponent<Bingsu>();
+        // Try to find the Bingsu component on this GameObject or any parent.
+        bingsuParent = GetComponentInParent<Bingsu>();
         if (bingsuParent == null)
         {
-            Debug.LogError("No Bingsu component found on parent!");
+            Debug.LogError("No Bingsu component found on this GameObject or any parent!");
         }
 
         // populate default topping offsets (only add if list is empty)
@@ -73,39 +74,60 @@ public class BingsuRenderer : MonoBehaviour
             toppingOffsets.Add(new ToppingOffset { toppingName = "mango", localPosition = new Vector3(-0.07f, 5.58f, 0f) });
         }
 
-        // Create child renderers if they don't exist
-        if (baseRenderer == null)
+        // Create or reuse child renderers
+        // Prefer existing child GameObjects (e.g. when using a prefab with placeholder sprites)
+        Transform child;
+
+        child = transform.Find("BaseRenderer");
+        if (child != null)
+        {
+            baseRenderer = child.GetComponent<SpriteRenderer>();
+            if (baseRenderer == null) baseRenderer = child.gameObject.AddComponent<SpriteRenderer>();
+        }
+        else
         {
             GameObject baseObj = new GameObject("BaseRenderer");
             baseObj.transform.SetParent(transform);
             baseObj.transform.localPosition = Vector3.zero;
             baseRenderer = baseObj.AddComponent<SpriteRenderer>();
-            baseRenderer.sortingLayerName = "Bingsu";
-            baseRenderer.sortingOrder = 3;
-            baseRenderer.enabled = false;
         }
+        baseRenderer.sortingLayerName = "Bingsu";
+        baseRenderer.sortingOrder = 3;
+        baseRenderer.enabled = false;
 
-        if (toppingRenderer == null)
+        child = transform.Find("ToppingRenderer");
+        if (child != null)
+        {
+            toppingRenderer = child.GetComponent<SpriteRenderer>();
+            if (toppingRenderer == null) toppingRenderer = child.gameObject.AddComponent<SpriteRenderer>();
+        }
+        else
         {
             GameObject topObj = new GameObject("ToppingRenderer");
             topObj.transform.SetParent(transform);
             topObj.transform.localPosition = Vector3.zero;
             toppingRenderer = topObj.AddComponent<SpriteRenderer>();
-            toppingRenderer.sortingLayerName = "Bingsu";
-            toppingRenderer.sortingOrder = 4;
-            toppingRenderer.enabled = false;
         }
+        toppingRenderer.sortingLayerName = "Bingsu";
+        toppingRenderer.sortingOrder = 4;
+        toppingRenderer.enabled = false;
 
-        if (logoRenderer == null)
+        child = transform.Find("LogoRenderer");
+        if (child != null)
+        {
+            logoRenderer = child.GetComponent<SpriteRenderer>();
+            if (logoRenderer == null) logoRenderer = child.gameObject.AddComponent<SpriteRenderer>();
+        }
+        else
         {
             GameObject logoObj = new GameObject("LogoRenderer");
             logoObj.transform.SetParent(transform);
             logoObj.transform.localPosition = Vector3.zero;
             logoRenderer = logoObj.AddComponent<SpriteRenderer>();
-            logoRenderer.sortingLayerName = "Bingsu";
-            logoRenderer.sortingOrder = 5;
-            logoRenderer.enabled = false;
         }
+        logoRenderer.sortingLayerName = "Bingsu";
+        logoRenderer.sortingOrder = 5;
+        logoRenderer.enabled = false;
 
         // Ensure any serialized/default sprites on prefab are cleared so newly-instantiated
         // bingsu prefabs don't appear pre-built. This handles the case where Bingsu
@@ -113,27 +135,143 @@ public class BingsuRenderer : MonoBehaviour
         ClearBingsu();
     }
 
+    private void Awake()
+    {
+        // As early as possible, clear any serialized sprites on known child renderers so
+        // instantiated prefabs don't show placeholder art before Start runs.
+        Transform child;
+
+        child = transform.Find("BaseRenderer");
+        if (child != null)
+        {
+            var sr = child.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.sprite = null;
+                sr.enabled = false;
+            }
+        }
+
+        child = transform.Find("ToppingRenderer");
+        if (child != null)
+        {
+            var sr = child.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.sprite = null;
+                sr.enabled = false;
+            }
+        }
+
+        child = transform.Find("LogoRenderer");
+        if (child != null)
+        {
+            var sr = child.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                sr.sprite = null;
+                sr.enabled = false;
+            }
+        }
+
+        // Ensure runtime SpriteRenderer references exist so event callbacks (which may fire
+        // before Start) don't encounter null refs. We prefer existing child objects but
+        // create fallback renderers if they're missing.
+        Transform existing;
+
+        existing = transform.Find("BaseRenderer");
+        if (existing != null)
+        {
+            baseRenderer = existing.GetComponent<SpriteRenderer>();
+            if (baseRenderer == null) baseRenderer = existing.gameObject.AddComponent<SpriteRenderer>();
+        }
+        else
+        {
+            GameObject go = new GameObject("BaseRenderer");
+            go.transform.SetParent(transform);
+            go.transform.localPosition = Vector3.zero;
+            baseRenderer = go.AddComponent<SpriteRenderer>();
+        }
+        baseRenderer.sortingLayerName = "Bingsu";
+        baseRenderer.sortingOrder = 3;
+        baseRenderer.enabled = false;
+
+        existing = transform.Find("ToppingRenderer");
+        if (existing != null)
+        {
+            toppingRenderer = existing.GetComponent<SpriteRenderer>();
+            if (toppingRenderer == null) toppingRenderer = existing.gameObject.AddComponent<SpriteRenderer>();
+        }
+        else
+        {
+            GameObject go = new GameObject("ToppingRenderer");
+            go.transform.SetParent(transform);
+            go.transform.localPosition = Vector3.zero;
+            toppingRenderer = go.AddComponent<SpriteRenderer>();
+        }
+        toppingRenderer.sortingLayerName = "Bingsu";
+        toppingRenderer.sortingOrder = 4;
+        toppingRenderer.enabled = false;
+
+        existing = transform.Find("LogoRenderer");
+        if (existing != null)
+        {
+            logoRenderer = existing.GetComponent<SpriteRenderer>();
+            if (logoRenderer == null) logoRenderer = existing.gameObject.AddComponent<SpriteRenderer>();
+        }
+        else
+        {
+            GameObject go = new GameObject("LogoRenderer");
+            go.transform.SetParent(transform);
+            go.transform.localPosition = Vector3.zero;
+            logoRenderer = go.AddComponent<SpriteRenderer>();
+        }
+        logoRenderer.sortingLayerName = "Bingsu";
+        logoRenderer.sortingOrder = 5;
+        logoRenderer.enabled = false;
+    }
+
     // --- Event callbacks ---
     private void ShowBowl()
     {
+        if (baseRenderer == null)
+        {
+            if (debugMode) Debug.LogWarning("BingsuRenderer.ShowBowl called but baseRenderer is null.");
+            return;
+        }
         baseRenderer.sprite = FindSpriteFlexible(baseSprites, "emptyBowl");
         baseRenderer.enabled = true;
     }
 
     private void ShowShavedMilk()
     {
+        if (baseRenderer == null)
+        {
+            if (debugMode) Debug.LogWarning("BingsuRenderer.ShowShavedMilk called but baseRenderer is null.");
+            return;
+        }
         baseRenderer.sprite = FindSpriteFlexible(baseSprites, "fullBowl");
         baseRenderer.enabled = true;
     }
 
     private void ShowBaseTopping(string type)
     {
+        if (baseRenderer == null)
+        {
+            if (debugMode) Debug.LogWarning("BingsuRenderer.ShowBaseTopping called but baseRenderer is null.");
+            return;
+        }
         baseRenderer.sprite = FindSpriteFlexible(baseSprites, type);
         baseRenderer.enabled = true;
     }
 
     private void ShowDrizzle()
     {
+        if (baseRenderer == null)
+        {
+            if (debugMode) Debug.LogWarning("BingsuRenderer.ShowDrizzle called but baseRenderer is null.");
+            return;
+        }
         if (baseRenderer.sprite == null) return;
 
         string baseName = baseRenderer.sprite.name;
@@ -144,6 +282,11 @@ public class BingsuRenderer : MonoBehaviour
 
     private void ShowLogo()
     {
+        if (logoRenderer == null)
+        {
+            if (debugMode) Debug.LogWarning("BingsuRenderer.ShowLogo called but logoRenderer is null.");
+            return;
+        }
         logoRenderer.sprite = logoSprite;
         logoRenderer.transform.localPosition = new Vector3(0, 0.51f, 0);
         logoRenderer.enabled = true;
@@ -152,6 +295,11 @@ public class BingsuRenderer : MonoBehaviour
     private void ShowTopping(string type)
     {
         string spriteName = "topping" + char.ToUpper(type[0]) + type.Substring(1);
+        if (toppingRenderer == null)
+        {
+            if (debugMode) Debug.LogWarning("BingsuRenderer.ShowTopping called but toppingRenderer is null.");
+            return;
+        }
         toppingRenderer.sprite = FindSpriteFlexible(toppingSprites, spriteName);
 
         // Apply local position for this topping type
@@ -171,12 +319,21 @@ public class BingsuRenderer : MonoBehaviour
     
     private void ClearBingsu()
     {
-        baseRenderer.enabled = false;
-        baseRenderer.sprite = null;
-        toppingRenderer.enabled = false;
-        toppingRenderer.sprite = null;
-        logoRenderer.enabled = false;
-        logoRenderer.sprite = null;
+        if (baseRenderer != null)
+        {
+            baseRenderer.enabled = false;
+            baseRenderer.sprite = null;
+        }
+        if (toppingRenderer != null)
+        {
+            toppingRenderer.enabled = false;
+            toppingRenderer.sprite = null;
+        }
+        if (logoRenderer != null)
+        {
+            logoRenderer.enabled = false;
+            logoRenderer.sprite = null;
+        }
 
     }
 
