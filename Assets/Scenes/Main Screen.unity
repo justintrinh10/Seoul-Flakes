@@ -2046,6 +2046,7 @@ GameObject:
   - component: {fileID: 411273320}
   - component: {fileID: 411273319}
   - component: {fileID: 411273318}
+  - component: {fileID: 411273321}
   m_Layer: 5
   m_Name: IceMachine
   m_TagString: Untagged
@@ -2155,6 +2156,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 411273316}
   m_CullTransparentMesh: 1
+--- !u!114 &411273321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411273316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4df513e740582447bb889043cb32ef36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShavedIceMachine
+  emptyBowl: {fileID: 5088316998373936774, guid: a6122d3ada6ed4d359c1323c035a74e8, type: 3}
+  bowlQuarter: {fileID: 5859572917855752013, guid: 84a1228cc83cb4a93bba4c76aef3ed0d, type: 3}
+  bowlHalf: {fileID: 1687920022652836443, guid: 45790d7d5695e4759940339ba3ba9055, type: 3}
+  bowlThreeQuarter: {fileID: -432012856265068417, guid: 185622e22a2a3480eab9748caf7e50dd, type: 3}
+  bowlFull: {fileID: -855298285791758126, guid: a631d1bfc669041409604746fcb30276, type: 3}
+  sensitivity: 0.005
+  decayRate: 0.6
+  fillPerEnergy: 0.15
+  bowlRenderer: {fileID: 0}
+  OnFillComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  debugMode: 0
 --- !u!1 &511554432
 GameObject:
   m_ObjectHideFlags: 0
@@ -5366,6 +5392,7 @@ GameObject:
   - component: {fileID: 1192718754}
   - component: {fileID: 1192718753}
   - component: {fileID: 1192718755}
+  - component: {fileID: 1192718756}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -5424,6 +5451,27 @@ MonoBehaviour:
   - {fileID: 584062703}
   - {fileID: 1528871032}
   - {fileID: 188813932}
+--- !u!114 &1192718756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192718752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed628933beba4da99ffbca0d450ab08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BungeoppangMinigame
+  playArea: {fileID: 0}
+  fishPrefab: {fileID: 6144703320471824631, guid: fdc12c9e88d244f9084003d192f68ab8, type: 3}
+  fishVisibleSeconds: 1.2
+  betweenSpawnDelay: 0.25
+  requiredConsecutiveHits: 3
+  OnMinigameComplete:
+    m_PersistentCalls:
+      m_Calls: []
+  debugMode: 0
 --- !u!1 &1236584514
 GameObject:
   m_ObjectHideFlags: 0
@@ -7951,6 +7999,7 @@ GameObject:
   - component: {fileID: 1812936989}
   - component: {fileID: 1812936988}
   - component: {fileID: 1812936987}
+  - component: {fileID: 1812936990}
   m_Layer: 5
   m_Name: BungeoppangMachine
   m_TagString: Untagged
@@ -8060,6 +8109,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1812936985}
   m_CullTransparentMesh: 1
+--- !u!114 &1812936990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812936985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24d08d30cad714786b89370e46636f22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BungeoppangMachine
+  openOnTap: 1
+  minigame: {fileID: 0}
+  debugMode: 0
 --- !u!1 &1835518852
 GameObject:
   m_ObjectHideFlags: 0
