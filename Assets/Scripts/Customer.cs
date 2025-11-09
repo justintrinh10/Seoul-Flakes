@@ -4,49 +4,56 @@ using UnityEngine;
 public class Customer : MonoBehaviour
 {
     private CustomerData customerData;
+
     private float timerDuration = 30.0f;
     private float timerPercentAngry = 0.33f;
     private float timer;
+
     private bool orderDelivered = false;
     private bool isAngry = false;
 
     [SerializeField] private float baseBlinkRate = 1.0f;
     [SerializeField] private float minBlinkRate = 0.2f;
-    public event Action<bool, float> onFrustratedBlink;
 
+    public event Action<bool, float> onFrustratedBlink;
     public event Action<string> onStateChange;
     public event Action<string, string> changeAppearance;
     public static event Action<Customer> onTimerEnd;
 
-    [Header("Prefabs")]
-    public GameObject dialogueBoxPrefab;  // Assign in Inspector
-
+    [Header("References")]
+    public CustomerDialogueBox dialogueBoxPrefab;
     private CustomerDialogueBox dialogueBoxInstance;
 
-    void Start()
-    {
-        // Set up customer data
-        customerData = new CustomerData();
-        customerData.randomCustomer();
-
-        // Update visuals
-        changeAppearance?.Invoke(customerData.getColor(), customerData.getAccessory());
-        onStateChange?.Invoke(customerData.getState());
-
-        // Spawn and configure dialogue box
-        if (dialogueBoxPrefab != null)
-        {
-            GameObject dialogueObj = Instantiate(dialogueBoxPrefab, transform);
-            dialogueObj.transform.localPosition = new Vector3(0, 2f, 0); // above customer’s head
-            dialogueBoxInstance = dialogueObj.GetComponent<CustomerDialogueBox>();
-            dialogueBoxInstance.createDialogueBox(customerData.getOrder().getBingsuOrder());
-        }
-
-        timer = timerDuration;
-    }
+    [Header("Dialogue Box Settings")]
+    [SerializeField] private Vector3 dialogueOffset = new Vector3(0, 2.2f, 0);
+    [SerializeField] private float dialogueScale = 1f;
 
     private float blinkTimer = 0f;
     private bool iconVisible = true;
+
+    void Start()
+    {
+        customerData = new CustomerData();
+        customerData.randomCustomer();
+        changeAppearance?.Invoke(customerData.getColor(), customerData.getAccessory());
+        onStateChange?.Invoke(customerData.getState());
+        timer = timerDuration;
+
+        if (dialogueBoxPrefab != null)
+        {
+            dialogueBoxInstance = Instantiate(dialogueBoxPrefab, transform, false);
+            dialogueBoxInstance.CreateDialogueBox(
+                customerData.getOrder().getBingsuOrder(),
+                transform,
+                dialogueOffset,
+                dialogueScale
+            );
+        }
+        else
+        {
+            Debug.LogWarning("Customer: DialogueBoxPrefab is not assigned!");
+        }
+    }
 
     void Update()
     {
@@ -54,11 +61,14 @@ public class Customer : MonoBehaviour
 
         timer -= Time.deltaTime;
 
-        if (timer <= 0.0f)
+        if (timer <= 0f)
         {
             orderDelivered = true;
             onStateChange?.Invoke("angry");
             onTimerEnd?.Invoke(this);
+
+            if (dialogueBoxInstance != null)
+                dialogueBoxInstance.FadeOutAndDestroy();
         }
         else if (timer <= timerDuration * timerPercentAngry)
         {
@@ -97,12 +107,4 @@ public class Customer : MonoBehaviour
     }
 
     public CustomerData GetCustomerData() => customerData;
-
-    private void OnDestroy()
-    {
-        if (dialogueBoxInstance != null)
-        {
-            Destroy(dialogueBoxInstance.gameObject);
-        }
-    }
 }

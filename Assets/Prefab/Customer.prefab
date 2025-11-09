@@ -2350,6 +2350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Customer
   baseBlinkRate: 1
   minBlinkRate: 0.2
+  dialogueBoxPrefab: {fileID: 8167659568734916373, guid: e037e20a0c4b8441b8bb29219f23bd71, type: 3}
 --- !u!114 &7438855205840665174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2366,6 +2367,10 @@ MonoBehaviour:
   happyParent: {fileID: 4361410962895999726}
   accessoryParent: {fileID: 5745959069436131757}
   effectParent: {fileID: 387430631480919449}
+  bobAmplitude: 0.04
+  baseBobFrequency: 0.5
+  maxBobFrequency: 2
+  angryRampSeconds: 8
 --- !u!1 &8605139966757453793
 GameObject:
   m_ObjectHideFlags: 0
