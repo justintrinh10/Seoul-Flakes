@@ -17,6 +17,17 @@ public class CustomerRenderer : MonoBehaviour
 
     private string currentColor = "";
 
+    [Header("Bobbing")]
+    [SerializeField] private float bobAmplitude = 0.04f;         // vertical offset in local units
+    [SerializeField] private float baseBobFrequency = 0.5f;      // cycles per second when neutral
+    [SerializeField] private float maxBobFrequency = 2.0f;       // cycles per second when fully angry
+    [SerializeField] private float angryRampSeconds = 8.0f;      // how many seconds to ramp from base -> max
+
+    private Vector3 initialLocalPosition;
+    private float bobPhase = 0f; // radians
+    private bool isAngry = false;
+    private float angryStartTime = 0f;
+
     private void Awake()
     {
         if (neutralParent == null) neutralParent = transform.Find("Neutral");
@@ -33,6 +44,29 @@ public class CustomerRenderer : MonoBehaviour
         SetSortingLayerAndOrderForAllRenderers("Customer");
 
         HideAll();
+
+        // record starting local position for bobbing
+        initialLocalPosition = transform.localPosition;
+    }
+
+    private void Update()
+    {
+        // Update anger progression
+        float angerLevel = 0f;
+        if (isAngry)
+        {
+            float t = Mathf.Max(0f, Time.time - angryStartTime);
+            angerLevel = Mathf.Clamp01(t / Mathf.Max(0.0001f, angryRampSeconds));
+        }
+
+        // compute target frequency
+        float targetFreq = isAngry ? Mathf.Lerp(baseBobFrequency, maxBobFrequency, angerLevel) : baseBobFrequency;
+
+        // advance phase and compute offset
+        bobPhase += Time.deltaTime * targetFreq * 2f * Mathf.PI;
+        float yOffset = Mathf.Sin(bobPhase) * bobAmplitude;
+
+        transform.localPosition = initialLocalPosition + new Vector3(0f, yOffset, 0f);
     }
 
     private void OnEnable()
@@ -136,6 +170,9 @@ public class CustomerRenderer : MonoBehaviour
         else if (state == "angry")
         {
             if (frustratedIcon != null) frustratedIcon.SetActive(true);
+            // start ramping bobbing frequency
+            isAngry = true;
+            angryStartTime = Time.time;
             if (currentNeutral != null) currentNeutral.SetActive(true);
             else
             {
@@ -150,6 +187,8 @@ public class CustomerRenderer : MonoBehaviour
         }
         else
         {
+            // stop angry ramping
+            isAngry = false;
             string neutralName = "neutral" + Capitalize(currentColor);
             Transform neutral = neutralParent.Find(neutralName);
             if (neutral != null)
