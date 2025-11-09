@@ -10,11 +10,13 @@ public class Bingsu : MonoBehaviour
     public static event Action onAddDrizzle;
     public static event Action<string> onAddTopping;
     public static event Action onAddLogo;
+    public static event Action onClearBingsu;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         bingsuData = new BingsuData();
+        onClearBingsu?.Invoke();
     }
 
     public void bingsuSpriteSignals()

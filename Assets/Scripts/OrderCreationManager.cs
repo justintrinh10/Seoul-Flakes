@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class OrderCreationManager : MonoBehaviour
 {
+    [Header("Prefabs")]
+    public GameObject orderPrefab;
+    public GameObject bingsuPrefab;
     Order currentOrder;
     Bingsu currentBingsu;
     public static event Action onError;
@@ -12,12 +15,29 @@ public class OrderCreationManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        currentOrder = new Order();
-        currentOrder.transform.position = new Vector3(-0.38f, -3.12f, 0);
-        transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-        currentBingsu = new Bingsu();
-        currentBingsu.transform.position = new Vector3(-0.51f, -2.65f, 0);
-        currentBingsu.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
+        CreateNewOrder();
+    }
+
+    public void CreateNewOrder()
+    {
+        // Remove any old ones
+        if (currentOrder != null)
+            Destroy(currentOrder.gameObject);
+        if (currentBingsu != null)
+            Destroy(currentBingsu.gameObject);
+
+        // Instantiate fresh ones
+        GameObject orderObj = Instantiate(orderPrefab, new Vector3(-0.38f, -3.12f, 0), Quaternion.identity);
+        orderObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+        currentOrder = orderObj.GetComponent<Order>();
+
+        GameObject bingsuObj = Instantiate(bingsuPrefab, new Vector3(-0.51f, -2.65f, 0), Quaternion.identity);
+        bingsuObj.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
+        currentBingsu = bingsuObj.GetComponent<Bingsu>();
+
+        currentOrder.AssignBingsu(currentBingsu);
+
+        displayOrder();
     }
 
     public void onMatchaIceClick()
@@ -261,10 +281,7 @@ public class OrderCreationManager : MonoBehaviour
 
     public void clearOrder()
     {
-        OrderData temp1 = new OrderData();
-        currentOrder.createOrder(temp1);
-        BingsuData temp2 = new BingsuData();
-        currentBingsu.createBingsu(temp2);
+        CreateNewOrder();
         displayOrder();
     }
 
