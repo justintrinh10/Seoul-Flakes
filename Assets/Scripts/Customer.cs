@@ -9,21 +9,39 @@ public class Customer : MonoBehaviour
     private float timer;
     private bool orderDelivered = false;
     private bool isAngry = false;
-    
-    [SerializeField] private float baseBlinkRate = 1.0f;    // Base time between blinks
-    [SerializeField] private float minBlinkRate = 0.2f;     // Fastest blink rate when timer is almost up
-    public event Action<bool, float> onFrustratedBlink;     // (isVisible, blinkRate)
+
+    [SerializeField] private float baseBlinkRate = 1.0f;
+    [SerializeField] private float minBlinkRate = 0.2f;
+    public event Action<bool, float> onFrustratedBlink;
 
     public event Action<string> onStateChange;
     public event Action<string, string> changeAppearance;
-    public static event Action<Customer> onTimerEnd; // Keep this static as it's for GameManager
+    public static event Action<Customer> onTimerEnd;
+
+    [Header("Prefabs")]
+    public GameObject dialogueBoxPrefab;  // Assign in Inspector
+
+    private CustomerDialogueBox dialogueBoxInstance;
 
     void Start()
     {
+        // Set up customer data
         customerData = new CustomerData();
         customerData.randomCustomer();
+
+        // Update visuals
         changeAppearance?.Invoke(customerData.getColor(), customerData.getAccessory());
         onStateChange?.Invoke(customerData.getState());
+
+        // Spawn and configure dialogue box
+        if (dialogueBoxPrefab != null)
+        {
+            GameObject dialogueObj = Instantiate(dialogueBoxPrefab, transform);
+            dialogueObj.transform.localPosition = new Vector3(0, 2f, 0); // above customer’s head
+            dialogueBoxInstance = dialogueObj.GetComponent<CustomerDialogueBox>();
+            dialogueBoxInstance.createDialogueBox(customerData.getOrder().getBingsuOrder());
+        }
+
         timer = timerDuration;
     }
 
@@ -50,12 +68,10 @@ public class Customer : MonoBehaviour
                 onStateChange?.Invoke("angry");
             }
 
-            // Calculate blink rate based on remaining time
             float angerDuration = timerDuration * timerPercentAngry;
             float remainingAngerTime = timer;
             float blinkRate = Mathf.Lerp(minBlinkRate, baseBlinkRate, remainingAngerTime / angerDuration);
-            
-            // Handle blinking
+
             blinkTimer -= Time.deltaTime;
             if (blinkTimer <= 0f)
             {
@@ -81,4 +97,12 @@ public class Customer : MonoBehaviour
     }
 
     public CustomerData GetCustomerData() => customerData;
+
+    private void OnDestroy()
+    {
+        if (dialogueBoxInstance != null)
+        {
+            Destroy(dialogueBoxInstance.gameObject);
+        }
+    }
 }
