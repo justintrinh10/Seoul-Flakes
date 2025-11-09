@@ -133,10 +133,16 @@ public class Customer : MonoBehaviour, IPointerClickHandler
 
     private void TryDeliverToCurrentOrder()
     {
+        Debug.Log("Customer clicked! Trying to deliver order...");
         OrderCreationManager ocm = FindObjectOfType<OrderCreationManager>();
         if (ocm != null)
         {
             ocm.DeliverCurrentOrderToCustomer(this);
         }
+        else
+        {
+            Debug.LogWarning("No OrderCreationManager found!");
+        }
     }
+
 }
