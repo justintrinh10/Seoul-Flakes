@@ -900,7 +900,7 @@ GameObject:
   - component: {fileID: 5231254288844179656}
   - component: {fileID: 5286692220431812313}
   m_Layer: 0
-  m_Name: frustrated
+  m_Name: frustratedIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2386,7 +2386,7 @@ GameObject:
   - component: {fileID: 3301321574349746966}
   - component: {fileID: 7782097231493105005}
   m_Layer: 0
-  m_Name: sparkle
+  m_Name: sparkleIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
