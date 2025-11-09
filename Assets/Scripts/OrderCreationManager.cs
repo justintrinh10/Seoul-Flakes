@@ -20,7 +20,7 @@ public class OrderCreationManager : MonoBehaviour
         currentBingsu.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
     }
 
-    void onMatchaIceClick()
+    public void onMatchaIceClick()
     {
         if (currentBingsu.addTopping("matcha"))
         {
@@ -31,7 +31,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onVanillaIceClick()
+    public void onVanillaIceClick()
     {
         if (currentBingsu.addTopping("vanilla"))
         {
@@ -42,7 +42,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onChocolateIceClick()
+    public void onChocolateIceClick()
     {
         if (currentBingsu.addTopping("chocolate"))
         {
@@ -53,7 +53,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onMangoIceClick()
+    public void onMangoIceClick()
     {
         if (currentBingsu.addTopping("mango"))
         {
@@ -64,7 +64,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onUbeIceClick()
+    public void onUbeIceClick()
     {
         if (currentBingsu.addTopping("ube"))
         {
@@ -75,7 +75,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onIceMachineClick()
+    public void onIceMachineClick()
     {
         if (currentBingsu.addShavedMilk())
         {
@@ -87,7 +87,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();   
     }
 
-    void onChocolateLogoClick()
+    public void onChocolateLogoClick()
     {
         if (currentBingsu.addLogo())
         {
@@ -98,13 +98,13 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onTrashClick()
+    public void onTrashClick()
     {
         clearOrder();
         onThrowTrash?.Invoke();
     }
 
-    void onCondensedMilkClick()
+    public void onCondensedMilkClick()
     {
         if (currentOrder.AddCondensedMilk())
         {
@@ -115,7 +115,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onStrawberryClick()
+    public void onStrawberryClick()
     {
         if (currentBingsu.addBaseTopping("strawberry"))
         {
@@ -126,7 +126,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onMangoClick()
+    public void onMangoClick()
     {
         if (currentBingsu.addBaseTopping("mango"))
         {
@@ -137,7 +137,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onUbeClick()
+    public void onUbeClick()
     {
         if (currentBingsu.addBaseTopping("ube"))
         {
@@ -148,7 +148,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onChocolateClick()
+    public void onChocolateClick()
     {
         if (currentBingsu.addBaseTopping("chocolate"))
         {
@@ -159,7 +159,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onInjeolmiClick()
+    public void onInjeolmiClick()
     {
         if (currentBingsu.addBaseTopping("injeolmi"))
         {
@@ -170,7 +170,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onPatClick()
+    public void onPatClick()
     {
         if (currentBingsu.addBaseTopping("pat"))
         {
@@ -181,7 +181,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onTrayClick()
+    public void onTrayClick()
     {
         if (currentOrder.AddTray())
         {
@@ -192,7 +192,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onBowlClick()
+    public void onBowlClick()
     {
         if (currentOrder.getOrderData().hasTray() && currentBingsu.addBowl())
         {
@@ -203,7 +203,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onDrizzleClick()
+    public void onDrizzleClick()
     {
         if (currentBingsu.addDrizzle())
         {
@@ -214,7 +214,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onBungeoppangClick()
+    public void onBungeoppangClick()
     {
         if (currentBingsu.addTopping("bungeoppang"))
         {
@@ -226,7 +226,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onCheeseCakeClick()
+    public void onCheeseCakeClick()
     {
         if (currentBingsu.addTopping("cheeseCake"))
         {
@@ -237,7 +237,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void onChocolateBarClick()
+    public void onChocolateBarClick()
     {
         if (currentBingsu.addTopping("chocolateBar"))
         {
@@ -248,7 +248,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void TiramisuClick()
+    public void TiramisuClick()
     {
         if (currentBingsu.addTopping("tiramisu"))
         {
@@ -259,7 +259,7 @@ public class OrderCreationManager : MonoBehaviour
         onError?.Invoke();
     }
 
-    void clearOrder()
+    public void clearOrder()
     {
         OrderData temp1 = new OrderData();
         currentOrder.createOrder(temp1);
@@ -268,7 +268,7 @@ public class OrderCreationManager : MonoBehaviour
         displayOrder();
     }
 
-    void displayOrder()
+    public void displayOrder()
     {
         currentOrder.OrderSpriteSignals();
         currentBingsu.bingsuSpriteSignals();

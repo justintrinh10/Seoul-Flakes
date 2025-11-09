@@ -201,7 +201,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 16539478}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onMatchaIceClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &16539478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +334,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 25058613}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onChocolateIceClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &25058613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,7 +524,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 52417715}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onChocolateBarClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &52417715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725,7 +761,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 88739255}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onTrashClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &88739255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -979,7 +1027,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 151511155}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: TiramisuClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &151511155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1347,13 +1407,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onBowlClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1708,13 +1768,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onChocolateClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2117,7 +2177,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 411273319}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onIceMachineClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &411273319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2810,13 +2882,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onTrayClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3413,7 +3485,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 649614486}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onVanillaIceClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &649614486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3901,13 +3985,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onInjeolmiClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4034,13 +4118,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onDrizzleClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4575,7 +4659,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1091714947}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onUbeIceClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1091714947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4697,13 +4793,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onPatClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4829,7 +4925,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1109396994}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onCheeseCakeClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1109396994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4950,7 +5058,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1125231342}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onMangoClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1125231342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5209,7 +5329,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1145966098}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onChocolateLogoClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1145966098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5392,6 +5524,7 @@ GameObject:
   - component: {fileID: 1192718754}
   - component: {fileID: 1192718753}
   - component: {fileID: 1192718755}
+  - component: {fileID: 1192718757}
   - component: {fileID: 1192718756}
   m_Layer: 0
   m_Name: GameManager
@@ -5472,6 +5605,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   debugMode: 0
+--- !u!114 &1192718757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1192718752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c87857820a284fe4927d7d4fa7f2903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OrderCreationManager
 --- !u!1 &1236584514
 GameObject:
   m_ObjectHideFlags: 0
@@ -5910,13 +6055,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onStrawberryClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6409,13 +6554,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onTrashClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6632,13 +6777,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onCondensedMilkClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7568,7 +7713,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1718477869}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onTrashClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1718477869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7827,7 +7984,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1730470197}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onMangoIceClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1730470197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7948,7 +8117,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1736637643}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onUbeClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1736637643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8070,7 +8251,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1812936988}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onBungeoppangClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1812936988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8344,7 +8537,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1841021608}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onCondensedMilkClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1841021608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9155,7 +9360,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2033378463}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onCondensedMilkClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2033378463
 MonoBehaviour:
   m_ObjectHideFlags: 0
