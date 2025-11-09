@@ -11,8 +11,9 @@ public class OrderCreationManager : MonoBehaviour
     public ShavedIceMachine shavedIceMachine;
     [Tooltip("Optional: assign the Bungeoppang minigame manager")]
     public BungeoppangMinigame bungeoppangMinigame;
-    [Tooltip("Optional: assign the WorkspaceManager to check which workspace is active")] 
+    [Tooltip("Optional: assign the WorkspaceManager to check which workspace is active")]
     public WorkspaceManager workspaceManager;
+    public GameManager gameManager;
     Order currentOrder;
     Bingsu currentBingsu;
     public static event Action onError;
@@ -101,6 +102,21 @@ public class OrderCreationManager : MonoBehaviour
     public void CreateOrderFromScratch()
     {
         CreateNewOrder();
+    }
+
+    public void onCustomer1Click()
+    {
+
+    }
+
+    public void onCustomer2Click()
+    {
+
+    }
+
+    public void onCustomer3Click()
+    {
+        
     }
 
     public void onMatchaIceClick()
