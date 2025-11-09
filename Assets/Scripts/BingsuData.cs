@@ -137,7 +137,7 @@ public class BingsuData
 
     public bool setDrizzle()
     {
-        if (bowl && shavedMilk && baseTopping && !drizzle)
+        if (bowl && shavedMilk && baseTopping && !drizzle && !topping)
         {
             drizzle = true;
             return true;
@@ -158,7 +158,7 @@ public class BingsuData
 
     public bool setLogo()
     {
-        if (bowl && shavedMilk && baseTopping && topping && !logo)
+        if (bowl && shavedMilk && baseTopping && !logo)
         {
             logo = true;
             return true;

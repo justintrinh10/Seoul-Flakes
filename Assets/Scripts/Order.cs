@@ -49,8 +49,18 @@ public class Order : MonoBehaviour
 
     public void createOrder(OrderData oData)
     {
-        orderData = oData;
+        orderData = oData; 
         OrderSpriteSignals();
+    }
+
+    public bool AddTray()
+    {
+        if (orderData.setTray())
+        {
+            onAddTray?.Invoke();
+            return true;
+        }
+        return false;
     }
 
     public bool AddCondensedMilk()

@@ -15,8 +15,6 @@ public class Bingsu : MonoBehaviour
     void Start()
     {
         bingsuData = new BingsuData();
-        transform.position = new Vector3(-0.51f, -2.65f, 0);
-        transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
     }
 
     public void bingsuSpriteSignals()
