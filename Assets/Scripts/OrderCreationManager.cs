@@ -6,20 +6,25 @@ public class OrderCreationManager : MonoBehaviour
     [Header("Prefabs")]
     public GameObject orderPrefab;
     public GameObject bingsuPrefab;
+    
     [Header("Minigames")]
     [Tooltip("Optional: assign the Shaved Ice machine instance (ShavedIceMachine)")]
     public ShavedIceMachine shavedIceMachine;
+    
     [Tooltip("Optional: assign the Bungeoppang minigame manager")]
     public BungeoppangMinigame bungeoppangMinigame;
+    
     [Tooltip("Optional: assign the WorkspaceManager to check which workspace is active")] 
     public WorkspaceManager workspaceManager;
-    Order currentOrder;
-    Bingsu currentBingsu;
+    
+    private Order currentOrder;
+    private Bingsu currentBingsu;
+
     public static event Action onError;
     public static event Action onPlaceDish;
     public static event Action onThrowTrash;
     public static event Action onPlaceFood;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         CreateNewOrder();
@@ -27,47 +32,45 @@ public class OrderCreationManager : MonoBehaviour
 
     private void Awake()
     {
-        // auto-find workspace manager if not assigned
+        // Auto-find workspace manager if not assigned
         if (workspaceManager == null)
             workspaceManager = FindObjectOfType<WorkspaceManager>();
 
-        // try to auto-find minigame instances if left unassigned
+        // Try to auto-find minigame instances if left unassigned
         if (shavedIceMachine == null)
             shavedIceMachine = FindObjectOfType<ShavedIceMachine>();
         if (bungeoppangMinigame == null)
             bungeoppangMinigame = FindObjectOfType<BungeoppangMinigame>();
 
-        // Basic prefab validation (helpful runtime errors if scene not wired)
-        if (orderPrefab == null)
+        // Validate prefabs
+        if (!ValidatePrefab(orderPrefab, "OrderPrefab") || !ValidatePrefab(bingsuPrefab, "BingsuPrefab"))
+            return;
+    }
+
+    private bool ValidatePrefab(GameObject prefab, string prefabName)
+    {
+        if (prefab == null)
         {
-            Debug.LogWarning("OrderCreationManager: 'orderPrefab' is not assigned in the inspector. CreateNewOrder will fail until it is assigned.");
+            Debug.LogError($"{prefabName} is not assigned in the inspector.");
+            onError?.Invoke();
+            return false;
         }
-        if (bingsuPrefab == null)
-        {
-            Debug.LogWarning("OrderCreationManager: 'bingsuPrefab' is not assigned in the inspector. CreateNewOrder will fail until it is assigned.");
-        }
+        return true;
     }
 
     public void CreateNewOrder()
     {
-        // Remove any old ones
+        // Remove old orders if they exist
         if (currentOrder != null)
             Destroy(currentOrder.gameObject);
         if (currentBingsu != null)
             Destroy(currentBingsu.gameObject);
 
-        // Validate prefabs
-        if (orderPrefab == null || bingsuPrefab == null)
-        {
-            Debug.LogError("OrderCreationManager.CreateNewOrder: Missing prefab(s). Ensure 'orderPrefab' and 'bingsuPrefab' are assigned in the inspector.");
-            onError?.Invoke();
-            return;
-        }
-
-        // Instantiate fresh ones
+        // Instantiate fresh prefabs
         GameObject orderObj = Instantiate(orderPrefab, new Vector3(-0.38f, -3.12f, 0), Quaternion.identity);
         orderObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
         currentOrder = orderObj.GetComponent<Order>();
+        
         if (currentOrder == null)
         {
             Debug.LogError("OrderCreationManager.CreateNewOrder: Instantiated 'orderPrefab' does not contain an Order component.");
@@ -79,6 +82,7 @@ public class OrderCreationManager : MonoBehaviour
         GameObject bingsuObj = Instantiate(bingsuPrefab, new Vector3(-0.51f, -2.65f, 0), Quaternion.identity);
         bingsuObj.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
         currentBingsu = bingsuObj.GetComponent<Bingsu>();
+
         if (currentBingsu == null)
         {
             Debug.LogError("OrderCreationManager.CreateNewOrder: Instantiated 'bingsuPrefab' does not contain a Bingsu component.");
@@ -95,103 +99,78 @@ public class OrderCreationManager : MonoBehaviour
         displayOrder();
     }
 
-    /// <summary>
-    /// Public helper to create a new, empty order from scratch. Can be wired to a UI Button.
-    /// </summary>
-    public void CreateOrderFromScratch()
+    private void displayOrder()
     {
-        CreateNewOrder();
+        currentOrder.OrderSpriteSignals();
+        currentBingsu.bingsuSpriteSignals();
     }
 
-    public void onMatchaIceClick()
+    public void AddTopping(string topping)
     {
-        if (currentBingsu.addTopping("matcha"))
+        if (currentBingsu.addTopping(topping))
         {
             displayOrder();
             onPlaceFood?.Invoke();
-            return;
         }
-        onError?.Invoke();
+        else
+        {
+            onError?.Invoke();
+        }
     }
 
-    public void onVanillaIceClick()
+    // Topping Click Methods
+    public void onMatchaIceClick() => AddTopping("matcha");
+    public void onVanillaIceClick() => AddTopping("vanilla");
+    public void onChocolateIceClick() => AddTopping("chocolate");
+    public void onMangoIceClick() => AddTopping("mango");
+    public void onUbeIceClick() => AddTopping("ube");
+
+    public void AddBaseTopping(string topping)
     {
-        if (currentBingsu.addTopping("vanilla"))
+        if (currentBingsu.addBaseTopping(topping))
         {
             displayOrder();
             onPlaceFood?.Invoke();
-            return;
         }
-        onError?.Invoke();
-    }
-
-    public void onChocolateIceClick()
-    {
-        if (currentBingsu.addTopping("chocolate"))
+        else
         {
-            displayOrder();
-            onPlaceFood?.Invoke();
-            return;
+            onError?.Invoke();
         }
-        onError?.Invoke();
     }
 
-    public void onMangoIceClick()
-    {
-        if (currentBingsu.addTopping("mango"))
-        {
-            displayOrder();
-            onPlaceFood?.Invoke();
-            return;
-        }
-        onError?.Invoke();
-    }
+    // Base Topping Click Methods
+    public void onStrawberryClick() => AddBaseTopping("strawberry");
+    public void onMangoClick() => AddBaseTopping("mango");
+    public void onUbeClick() => AddBaseTopping("ube");
+    public void onChocolateClick() => AddBaseTopping("chocolate");
+    public void onInjeolmiClick() => AddBaseTopping("injeolmi");
+    public void onPatClick() => AddBaseTopping("pat");
 
-    public void onUbeIceClick()
-    {
-        if (currentBingsu.addTopping("ube"))
-        {
-            displayOrder();
-            onPlaceFood?.Invoke();
-            return;
-        }
-        onError?.Invoke();
-    }
-
+    // Direct Item Click Methods
     public void onIceMachineClick()
     {
-        // Only allow shaved-ice minigame when left workspace is active
-        if (workspaceManager != null && workspaceManager.GetCurrentIndex() != 0)
+        if (IsInCorrectWorkspace(0) && currentBingsu.addShavedMilk())
         {
-            // not on left workspace
+            displayOrder();
+            onPlaceFood?.Invoke();
+        }
+        else
+        {
             onError?.Invoke();
-            return;
         }
-        // Direct behavior: add shaved milk immediately (no minigame)
-        if (currentBingsu.addShavedMilk())
+    }
+
+    public void onBungeoppangClick()
+    {
+        if (IsInCorrectWorkspace(2) && currentBingsu.addTopping("bungeoppang"))
         {
             displayOrder();
             onPlaceFood?.Invoke();
-            return;
         }
-        onError?.Invoke();
-    }
-
-    public void onChocolateLogoClick()
-    {
-        if (currentBingsu.addLogo())
+        else
         {
-            displayOrder();
-            onPlaceFood?.Invoke();
-            return;
+            onError?.Invoke();
         }
-        onError?.Invoke();
-    }
-
-    public void onTrashClick()
-    {
-        clearOrder();
-        onThrowTrash?.Invoke();
     }
 
     public void onCondensedMilkClick()
@@ -200,75 +179,11 @@ public class OrderCreationManager : MonoBehaviour
         {
             displayOrder();
             onPlaceDish?.Invoke();
-            return;
         }
-        onError?.Invoke();
-    }
-
-    public void onStrawberryClick()
-    {
-        if (currentBingsu.addBaseTopping("strawberry"))
+        else
         {
-            displayOrder();
-            onPlaceFood?.Invoke();
-            return;
+            onError?.Invoke();
         }
-        onError?.Invoke();
-    }
-
-    public void onMangoClick()
-    {
-        if (currentBingsu.addBaseTopping("mango"))
-        {
-            displayOrder();
-            onPlaceFood?.Invoke();
-            return;
-        }
-        onError?.Invoke();
-    }
-
-    public void onUbeClick()
-    {
-        if (currentBingsu.addBaseTopping("ube"))
-        {
-            displayOrder();
-            onPlaceFood?.Invoke();
-            return;
-        }
-        onError?.Invoke();
-    }
-
-    public void onChocolateClick()
-    {
-        if (currentBingsu.addBaseTopping("chocolate"))
-        {
-            displayOrder();
-            onPlaceFood?.Invoke();
-            return;
-        }
-        onError?.Invoke();
-    }
-
-    public void onInjeolmiClick()
-    {
-        if (currentBingsu.addBaseTopping("injeolmi"))
-        {
-            displayOrder();
-            onPlaceFood?.Invoke();
-            return;
-        }
-        onError?.Invoke();
-    }
-
-    public void onPatClick()
-    {
-        if (currentBingsu.addBaseTopping("pat"))
-        {
-            displayOrder();
-            onPlaceFood?.Invoke();
-            return;
-        }
-        onError?.Invoke();
     }
 
     public void onTrayClick()
@@ -277,9 +192,11 @@ public class OrderCreationManager : MonoBehaviour
         {
             displayOrder();
             onPlaceDish?.Invoke();
-            return;
         }
-        onError?.Invoke();
+        else
+        {
+            onError?.Invoke();
+        }
     }
 
     public void onBowlClick()
@@ -288,9 +205,11 @@ public class OrderCreationManager : MonoBehaviour
         {
             displayOrder();
             onPlaceDish?.Invoke();
-            return;
         }
-        onError?.Invoke();
+        else
+        {
+            onError?.Invoke();
+        }
     }
 
     public void onDrizzleClick()
@@ -299,60 +218,17 @@ public class OrderCreationManager : MonoBehaviour
         {
             displayOrder();
             onPlaceFood?.Invoke();
-            return;
         }
-        onError?.Invoke();
-    }
-
-    public void onBungeoppangClick()
-    {
-        // Only allow bungeoppang minigame when right workspace is active
-        if (workspaceManager != null && workspaceManager.GetCurrentIndex() != 2)
+        else
         {
             onError?.Invoke();
-            return;
         }
-        // Direct behavior: add bungeoppang topping immediately (no minigame)
-        if (currentBingsu.addTopping("bungeoppang"))
-        {
-            displayOrder();
-            onPlaceFood?.Invoke();
-            return;
-        }
-        onError?.Invoke();
     }
 
-    public void onCheeseCakeClick()
+    public void onTrashClick()
     {
-        if (currentBingsu.addTopping("cheeseCake"))
-        {
-            displayOrder();
-            onPlaceFood?.Invoke();
-            return;
-        }
-        onError?.Invoke();
-    }
-
-    public void onChocolateBarClick()
-    {
-        if (currentBingsu.addTopping("chocolateBar"))
-        {
-            displayOrder();
-            onPlaceFood?.Invoke();
-            return;
-        }
-        onError?.Invoke();
-    }
-
-    public void TiramisuClick()
-    {
-        if (currentBingsu.addTopping("tiramisu"))
-        {
-            displayOrder();
-            onPlaceFood?.Invoke();
-            return;
-        }
-        onError?.Invoke();
+        CreateNewOrder();
+        onThrowTrash?.Invoke();
     }
 
     public void clearOrder()
@@ -361,57 +237,29 @@ public class OrderCreationManager : MonoBehaviour
         displayOrder();
     }
 
-    public void displayOrder()
+    private bool IsInCorrectWorkspace(int requiredIndex)
     {
-        currentOrder.OrderSpriteSignals();
-        currentBingsu.bingsuSpriteSignals();
+        return workspaceManager != null && workspaceManager.GetCurrentIndex() == requiredIndex;
     }
 
-    /// <summary>
-    /// Called by a Customer (or other caller) to attempt delivering the currently-built order to that customer.
-    /// This will locate the GameManager and ask it to deliver by customer reference. If delivery is attempted
-    /// we create a fresh order afterwards.
-    /// </summary>
     public void DeliverCurrentOrderToCustomer(Customer customer)
     {
-        if (customer == null)
+        if (customer == null || currentOrder == null)
         {
-            onError?.Invoke();
-            return;
-        }
-
-        if (currentOrder == null)
-        {
-            Debug.LogWarning("OrderCreationManager.DeliverCurrentOrderToCustomer: No current order to deliver.");
             onError?.Invoke();
             return;
         }
 
         GameManager gm = FindObjectOfType<GameManager>();
-        if (gm == null)
+        if (gm == null || !gm.TryDeliverOrderToCustomer(customer, currentOrder))
         {
-            Debug.LogWarning("OrderCreationManager.DeliverCurrentOrderToCustomer: No GameManager found in scene.");
             onError?.Invoke();
-            return;
+        }
+        else
+        {
+            onPlaceFood?.Invoke();
         }
 
-        bool accepted = gm.TryDeliverOrderToCustomer(customer, currentOrder);
-
-        // Remove the current UI order regardless of correctness and start a fresh one
-        if (currentOrder != null)
-            Destroy(currentOrder.gameObject);
-        if (currentBingsu != null)
-            Destroy(currentBingsu.gameObject);
-
-        currentOrder = null;
-        currentBingsu = null;
-
-        // Create a new empty order for next customer
-        CreateNewOrder();
-
-        if (accepted)
-            onPlaceFood?.Invoke();
-        else
-            onError?.Invoke();
+        CreateNewOrder(); // Reset for the next order
     }
 }

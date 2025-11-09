@@ -5562,7 +5562,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::OrderCreationManager
   orderPrefab: {fileID: 7575782028851805362, guid: 46ca209e1bc7a42f3a0332af95264c74, type: 3}
   bingsuPrefab: {fileID: 5818904591583035794, guid: 456d366bed6d64b3097c11972680ec4b, type: 3}
-  shavedIceMachine: {fileID: 0}
+  shavedIceMachine: {fileID: 6500847601340689050, guid: f90344ec0652c44d5a3ec49add79221b, type: 3}
   bungeoppangMinigame: {fileID: 0}
   workspaceManager: {fileID: 1192718755}
 --- !u!1 &1236584514
