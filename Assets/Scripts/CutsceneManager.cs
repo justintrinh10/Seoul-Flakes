@@ -2,37 +2,56 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine.InputSystem;  // Import the Input System package
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class CutsceneManager : MonoBehaviour
 {
     public TextMeshProUGUI textDisplay;
-    [TextArea(3,10)]
+    
+    [SerializeField, TextArea(3, 10)]
     public string[] cutsceneLines;
+
     public float typingSpeed = 0.03f;
 
     private int index = 0;
     private bool isTyping = false;
 
+    private InputAction clickAction;
+
+    void OnEnable()
+    {
+        // Set up the input action for mouse click
+        clickAction = new InputAction(binding: "<Mouse>/leftButton");
+        clickAction.performed += _ => OnClick();
+        clickAction.Enable();
+    }
+
+    void OnDisable()
+    {
+        clickAction.Disable();  // Clean up when the object is disabled
+    }
+
+    void OnClick()
+    {
+        if (isTyping)
+        {
+            StopAllCoroutines();
+            textDisplay.text = cutsceneLines[index];
+            isTyping = false;
+        }
+        else
+        {
+            NextLine();
+        }
+    }
+
     void Start()
     {
         StartCoroutine(TypeLine());
-    }
-
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0)) // left click or tap
-        {
-            if (isTyping)
-            {
-                StopAllCoroutines();
-                textDisplay.text = cutsceneLines[index];
-                isTyping = false;
-            }
-            else
-            {
-                NextLine();
-            }
-        }
     }
 
     IEnumerator TypeLine()
@@ -56,7 +75,7 @@ public class CutsceneManager : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("MainMenu"); // change to your next scene name
+            SceneManager.LoadScene("Main Screen"); // Change to your next scene name
         }
     }
 }
