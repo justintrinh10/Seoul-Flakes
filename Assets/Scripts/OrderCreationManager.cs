@@ -11,6 +11,8 @@ public class OrderCreationManager : MonoBehaviour
     public ShavedIceMachine shavedIceMachine;
     [Tooltip("Optional: assign the Bungeoppang minigame manager")]
     public BungeoppangMinigame bungeoppangMinigame;
+    [Tooltip("Optional: assign the WorkspaceManager to check which workspace is active")] 
+    public WorkspaceManager workspaceManager;
     Order currentOrder;
     Bingsu currentBingsu;
     public static event Action onError;
@@ -20,14 +22,20 @@ public class OrderCreationManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // auto-find minigames if not assigned
-        if (shavedIceMachine == null)
-        {
-            var sim = FindObjectOfType(typeof(MonoBehaviour));
-            // try to find by name
-            var obj = GameObject.FindObjectOfType<MonoBehaviour>();
-        }
         CreateNewOrder();
+    }
+
+    private void Awake()
+    {
+        // auto-find workspace manager if not assigned
+        if (workspaceManager == null)
+            workspaceManager = FindObjectOfType<WorkspaceManager>();
+
+        // try to auto-find minigame instances if left unassigned
+        if (shavedIceMachine == null)
+            shavedIceMachine = FindObjectOfType<ShavedIceMachine>();
+        if (bungeoppangMinigame == null)
+            bungeoppangMinigame = FindObjectOfType<BungeoppangMinigame>();
     }
 
     public void CreateNewOrder()
@@ -109,6 +117,14 @@ public class OrderCreationManager : MonoBehaviour
 
     public void onIceMachineClick()
     {
+        // Only allow shaved-ice minigame when left workspace is active
+        if (workspaceManager != null && workspaceManager.GetCurrentIndex() != 0)
+        {
+            // not on left workspace
+            onError?.Invoke();
+            return;
+        }
+
         // If a ShavedIceMachine instance is available, start its minigame and add shaved milk on completion.
         if (shavedIceMachine != null)
         {
@@ -273,6 +289,13 @@ public class OrderCreationManager : MonoBehaviour
 
     public void onBungeoppangClick()
     {
+        // Only allow bungeoppang minigame when right workspace is active
+        if (workspaceManager != null && workspaceManager.GetCurrentIndex() != 2)
+        {
+            onError?.Invoke();
+            return;
+        }
+
         if (bungeoppangMinigame != null)
         {
             // start the bungeoppang minigame; it will call back OnBungeoppangMinigameComplete via UnityEvent

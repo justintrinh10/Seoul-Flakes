@@ -10,6 +10,11 @@ public class WorkspaceManager : MonoBehaviour
 
     private int currentIndex = 1;        // Start at center workspace
 
+    /// <summary>
+    /// Returns the current workspace index: 0=Left, 1=Center, 2=Right (if assigned in that order).
+    /// </summary>
+    public int GetCurrentIndex() => currentIndex;
+
     void Start()
     {
         UpdateWorkspace();
