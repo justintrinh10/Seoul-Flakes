@@ -29,6 +29,7 @@ public class ShavedIceMachine : MonoBehaviour
     private float swipeEnergy = 0f;      // increases with swiping
     private bool isComplete = false;
     private Vector2 lastMousePos;
+    private bool active = false; // minigame active flag
 
     void Awake()
     {
@@ -49,6 +50,7 @@ public class ShavedIceMachine : MonoBehaviour
 
     void Update()
     {
+        if (!active) return;
         HandleInput();
         ApplyFillingLogic();
     }
@@ -107,6 +109,8 @@ public class ShavedIceMachine : MonoBehaviour
                 isComplete = true;
                 if (debugMode) Debug.Log("ShavedIceMachine: Fill complete");
                 OnFillComplete?.Invoke();
+                // stop accepting input after completion
+                StopMinigame();
             }
         }
     }
@@ -133,5 +137,24 @@ public class ShavedIceMachine : MonoBehaviour
         swipeEnergy = 0f;
         isComplete = false;
         UpdateSprite();
+    }
+
+    /// <summary>
+    /// Start the minigame: enable input and reset the bowl.
+    /// </summary>
+    public void StartMinigame()
+    {
+        ResetBowl();
+        active = true;
+        if (debugMode) Debug.Log("ShavedIceMachine: minigame started");
+    }
+
+    /// <summary>
+    /// Stop the minigame: disable input.
+    /// </summary>
+    public void StopMinigame()
+    {
+        active = false;
+        if (debugMode) Debug.Log("ShavedIceMachine: minigame stopped");
     }
 }

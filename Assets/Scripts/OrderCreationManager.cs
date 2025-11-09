@@ -6,6 +6,11 @@ public class OrderCreationManager : MonoBehaviour
     [Header("Prefabs")]
     public GameObject orderPrefab;
     public GameObject bingsuPrefab;
+    [Header("Minigames")]
+    [Tooltip("Optional: assign the Shaved Ice machine instance (ShavedIceMachine)")]
+    public ShavedIceMachine shavedIceMachine;
+    [Tooltip("Optional: assign the Bungeoppang minigame manager")]
+    public BungeoppangMinigame bungeoppangMinigame;
     Order currentOrder;
     Bingsu currentBingsu;
     public static event Action onError;
@@ -15,6 +20,13 @@ public class OrderCreationManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // auto-find minigames if not assigned
+        if (shavedIceMachine == null)
+        {
+            var sim = FindObjectOfType(typeof(MonoBehaviour));
+            // try to find by name
+            var obj = GameObject.FindObjectOfType<MonoBehaviour>();
+        }
         CreateNewOrder();
     }
 
@@ -97,14 +109,39 @@ public class OrderCreationManager : MonoBehaviour
 
     public void onIceMachineClick()
     {
+        // If a ShavedIceMachine instance is available, start its minigame and add shaved milk on completion.
+        if (shavedIceMachine != null)
+        {
+            // prepare the machine
+            shavedIceMachine.ResetBowl();
+            shavedIceMachine.StopMinigame();
+
+            // remove previous listeners and add a one-shot listener
+            shavedIceMachine.OnFillComplete.RemoveAllListeners();
+            shavedIceMachine.OnFillComplete.AddListener(() => {
+                if (currentBingsu.addShavedMilk())
+                {
+                    displayOrder();
+                    onPlaceFood?.Invoke();
+                }
+                else
+                {
+                    onError?.Invoke();
+                }
+            });
+
+            shavedIceMachine.StartMinigame();
+            return;
+        }
+
+        // fallback: try to add shaved milk directly
         if (currentBingsu.addShavedMilk())
         {
-            //add Ice machine minigame here
             displayOrder();
             onPlaceFood?.Invoke();
             return;
         }
-        onError?.Invoke();   
+        onError?.Invoke();
     }
 
     public void onChocolateLogoClick()
@@ -236,9 +273,27 @@ public class OrderCreationManager : MonoBehaviour
 
     public void onBungeoppangClick()
     {
+        if (bungeoppangMinigame != null)
+        {
+            // start the bungeoppang minigame; it will call back OnBungeoppangMinigameComplete via UnityEvent
+            bungeoppangMinigame.OnMinigameComplete.RemoveAllListeners();
+            bungeoppangMinigame.OnMinigameComplete.AddListener(() => {
+                if (currentBingsu.addTopping("bungeoppang"))
+                {
+                    displayOrder();
+                    onPlaceFood?.Invoke();
+                }
+                else
+                {
+                    onError?.Invoke();
+                }
+            });
+            bungeoppangMinigame.StartMinigame();
+            return;
+        }
+
         if (currentBingsu.addTopping("bungeoppang"))
         {
-            //add Ice machine minigame here
             displayOrder();
             onPlaceFood?.Invoke();
             return;
