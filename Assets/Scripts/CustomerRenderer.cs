@@ -31,7 +31,7 @@ public class CustomerRenderer : MonoBehaviour
         }
 
         // Call to set sorting layer for all renderers
-        SetSortingLayerForAllRenderers("Customer");
+        SetSortingLayerAndOrderForAllRenderers("Customer");
 
         HideAll();
     }
@@ -187,16 +187,15 @@ public class CustomerRenderer : MonoBehaviour
         return char.ToUpper(input[0]) + input.Substring(1);
     }
 
-    private void SetSortingLayerForAllRenderers(string layerName)
+private void SetSortingLayerAndOrderForAllRenderers(string layerName)
 {
-    // Set sorting layer for all neutral, happy, accessory, and effect child objects
-    SetSortingLayerForChildren(neutralParent, layerName);
-    SetSortingLayerForChildren(happyParent, layerName);
-    SetSortingLayerForChildren(accessoryParent, layerName);
-    SetSortingLayerForChildren(effectParent, layerName);
+    SetSortingLayerForChildren(neutralParent, layerName, 0); // Body gets 0 or low order
+    SetSortingLayerForChildren(happyParent, layerName, 0);   // Body gets 0 or low order
+    SetSortingLayerForChildren(accessoryParent, layerName, 10); // Accessories get higher order (e.g. 10)
+    SetSortingLayerForChildren(effectParent, layerName, 0);  // Effects can be 0 or low order (or a separate layer)
 }
 
-private void SetSortingLayerForChildren(Transform parent, string layerName)
+private void SetSortingLayerForChildren(Transform parent, string layerName, int sortingOrder)
 {
     if (parent == null) return;
 
@@ -207,9 +206,30 @@ private void SetSortingLayerForChildren(Transform parent, string layerName)
         SpriteRenderer spriteRenderer = child.GetComponent<SpriteRenderer>();
         if (spriteRenderer != null)
         {
-            // Set the sorting layer name to "Customer"
+            // Set the sorting layer and order
             spriteRenderer.sortingLayerName = layerName;
+            spriteRenderer.sortingOrder = sortingOrder;
         }
     }
 }
+
+private void Awake()
+{
+    if (neutralParent == null) neutralParent = transform.Find("Neutral");
+    if (happyParent == null) happyParent = transform.Find("Happy");
+    if (accessoryParent == null) accessoryParent = transform.Find("Accessory");
+    if (effectParent == null) effectParent = transform.Find("Effect");
+
+    if (effectParent != null)
+    {
+        sparkleIcon = effectParent.Find("sparkleIcon")?.gameObject;
+        frustratedIcon = effectParent.Find("frustratedIcon")?.gameObject;
+    }
+
+    // Call to set sorting layer for all renderers
+    SetSortingLayerAndOrderForAllRenderers("Customer");
+
+    HideAll();
+}
+
 }
