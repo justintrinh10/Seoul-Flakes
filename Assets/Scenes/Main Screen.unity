@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 136072892}
   - component: {fileID: 136072893}
   m_Layer: 0
-  m_Name: neutralBlue_0
+  m_Name: neutralBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -372,7 +372,7 @@ GameObject:
   - component: {fileID: 153025013}
   - component: {fileID: 153025014}
   m_Layer: 0
-  m_Name: neutralRed_0
+  m_Name: neutralRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -552,7 +552,7 @@ GameObject:
   - component: {fileID: 288418231}
   - component: {fileID: 288418232}
   m_Layer: 0
-  m_Name: sparkle_0
+  m_Name: sparkle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -707,7 +707,7 @@ GameObject:
   - component: {fileID: 363886035}
   - component: {fileID: 363886036}
   m_Layer: 0
-  m_Name: horns_0
+  m_Name: horns
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -797,7 +797,7 @@ GameObject:
   - component: {fileID: 381951264}
   - component: {fileID: 381951265}
   m_Layer: 0
-  m_Name: happyRed_0
+  m_Name: happyRed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -887,7 +887,7 @@ GameObject:
   - component: {fileID: 428623558}
   - component: {fileID: 428623559}
   m_Layer: 0
-  m_Name: happyPurple_0
+  m_Name: happyPurple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1067,7 +1067,7 @@ GameObject:
   - component: {fileID: 495287308}
   - component: {fileID: 495287309}
   m_Layer: 0
-  m_Name: balloon_0
+  m_Name: balloon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1378,7 +1378,7 @@ GameObject:
   - component: {fileID: 641076771}
   - component: {fileID: 641076772}
   m_Layer: 0
-  m_Name: detectiveHat_0
+  m_Name: detectiveHat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1468,7 +1468,7 @@ GameObject:
   - component: {fileID: 666366572}
   - component: {fileID: 666366573}
   m_Layer: 0
-  m_Name: cowboyHat_0
+  m_Name: cowboyHat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1558,7 +1558,7 @@ GameObject:
   - component: {fileID: 669926066}
   - component: {fileID: 669926067}
   m_Layer: 0
-  m_Name: bandana_0
+  m_Name: bandana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1648,7 +1648,7 @@ GameObject:
   - component: {fileID: 672839696}
   - component: {fileID: 672839697}
   m_Layer: 0
-  m_Name: neutralGreen_0
+  m_Name: neutralGreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1738,7 +1738,7 @@ GameObject:
   - component: {fileID: 700100496}
   - component: {fileID: 700100497}
   m_Layer: 0
-  m_Name: sprout_0
+  m_Name: sprout
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1918,7 +1918,7 @@ GameObject:
   - component: {fileID: 788395636}
   - component: {fileID: 788395637}
   m_Layer: 0
-  m_Name: neutralPink_0
+  m_Name: neutralPink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2008,7 +2008,7 @@ GameObject:
   - component: {fileID: 803144924}
   - component: {fileID: 803144925}
   m_Layer: 0
-  m_Name: happyBlue_0
+  m_Name: happyBlue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2098,7 +2098,7 @@ GameObject:
   - component: {fileID: 826219947}
   - component: {fileID: 826219948}
   m_Layer: 0
-  m_Name: chefHat_0
+  m_Name: chefHat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2278,7 +2278,7 @@ GameObject:
   - component: {fileID: 975954892}
   - component: {fileID: 975954893}
   m_Layer: 0
-  m_Name: happyYellow_0
+  m_Name: happyYellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2368,7 +2368,7 @@ GameObject:
   - component: {fileID: 1049002130}
   - component: {fileID: 1049002131}
   m_Layer: 0
-  m_Name: neutralPurple_0
+  m_Name: neutralPurple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2458,7 +2458,7 @@ GameObject:
   - component: {fileID: 1062313099}
   - component: {fileID: 1062313100}
   m_Layer: 0
-  m_Name: topHat_0
+  m_Name: topHat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2548,7 +2548,7 @@ GameObject:
   - component: {fileID: 1105866790}
   - component: {fileID: 1105866791}
   m_Layer: 0
-  m_Name: happyOrange_0
+  m_Name: happyOrange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2638,7 +2638,7 @@ GameObject:
   - component: {fileID: 1237359233}
   - component: {fileID: 1237359234}
   m_Layer: 0
-  m_Name: frustrated_0
+  m_Name: frustrated
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2766,7 +2766,7 @@ GameObject:
   - component: {fileID: 1285713451}
   - component: {fileID: 1285713452}
   m_Layer: 0
-  m_Name: happyPink_0
+  m_Name: happyPink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2992,7 +2992,7 @@ GameObject:
   - component: {fileID: 1510742973}
   - component: {fileID: 1510742974}
   m_Layer: 0
-  m_Name: crown_0
+  m_Name: crown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3082,7 +3082,7 @@ GameObject:
   - component: {fileID: 1662847675}
   - component: {fileID: 1662847676}
   m_Layer: 0
-  m_Name: neutralOrange_0
+  m_Name: neutralOrange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3245,7 +3245,7 @@ GameObject:
   - component: {fileID: 1692607651}
   - component: {fileID: 1692607652}
   m_Layer: 0
-  m_Name: ninjaHeadband_0
+  m_Name: ninjaHeadband
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3335,7 +3335,7 @@ GameObject:
   - component: {fileID: 1697059452}
   - component: {fileID: 1697059453}
   m_Layer: 0
-  m_Name: happyGreen_0
+  m_Name: happyGreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3463,7 +3463,7 @@ GameObject:
   - component: {fileID: 1771408658}
   - component: {fileID: 1771408659}
   m_Layer: 0
-  m_Name: neutralYellow_0
+  m_Name: neutralYellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
