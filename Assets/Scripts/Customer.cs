@@ -41,14 +41,19 @@ public class Customer : MonoBehaviour
 
         if (dialogueBoxPrefab != null)
         {
-            dialogueBoxInstance = Instantiate(dialogueBoxPrefab, transform, false);
+            // Instantiate without parent
+            dialogueBoxInstance = Instantiate(dialogueBoxPrefab);
+            dialogueBoxInstance.transform.position = transform.position + dialogueOffset; // world position
+            dialogueBoxInstance.transform.localScale = Vector3.one * dialogueScale;          // world scale
+
             dialogueBoxInstance.CreateDialogueBox(
                 customerData.getOrder().getBingsuOrder(),
-                transform,
+                transform,   // pass customer transform for following
                 dialogueOffset,
                 dialogueScale
             );
         }
+
         else
         {
             Debug.LogWarning("Customer: DialogueBoxPrefab is not assigned!");
