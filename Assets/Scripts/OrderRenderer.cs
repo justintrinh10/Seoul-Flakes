@@ -49,6 +49,8 @@ public class OrderRenderer : MonoBehaviour
             milkObj.transform.localPosition = Vector3.zero;
             condensedMilkRenderer = milkObj.AddComponent<SpriteRenderer>();
         }
+        condensedMilkRenderer.transform.localPosition = new Vector3(4.13f, -0.64f, 0);
+        condensedMilkRenderer.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
 
         // Sorting setup
         trayRenderer.sortingLayerName = "Bingsu";

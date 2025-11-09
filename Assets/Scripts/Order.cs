@@ -13,6 +13,8 @@ public class Order : MonoBehaviour
         orderData = new OrderData();
         orderData.setTray();
         onAddTray?.Invoke();
+        transform.position = new Vector3(-0.38f, -3.12f, 0);
+        transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
     }
 
     public void OrderSpriteSignals()
