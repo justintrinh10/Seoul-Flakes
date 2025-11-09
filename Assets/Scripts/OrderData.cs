@@ -114,4 +114,26 @@ public class OrderData
         tray = false;
         condenseMilk = false;
     }
+
+    public bool Matches(OrderData other)
+    {
+        if (other == null)
+            return false;
+
+        if (tray != other.tray)
+            return false;
+
+        if (condenseMilk != other.condenseMilk)
+            return false;
+
+        if (bingsuOrder == null && other.bingsuOrder == null)
+            return true;
+
+        if (bingsuOrder == null || other.bingsuOrder == null)
+            return false;
+
+        return bingsuOrder.Matches(other.bingsuOrder);
+    }
+
+
 }
