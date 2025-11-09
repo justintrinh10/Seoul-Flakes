@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CustomerRenderer : MonoBehaviour
 {
-    [Header("Parent Groups")]
+    [Header("Sprite Parents")]
     [SerializeField] private Transform neutralParent;
     [SerializeField] private Transform happyParent;
     [SerializeField] private Transform accessoryParent;
@@ -15,135 +15,172 @@ public class CustomerRenderer : MonoBehaviour
     private GameObject sparkleIcon;
     private GameObject frustratedIcon;
 
+    private string currentColor = "";
+
+    private void Awake()
+    {
+        if (neutralParent == null) neutralParent = transform.Find("Neutral");
+        if (happyParent == null) happyParent = transform.Find("Happy");
+        if (accessoryParent == null) accessoryParent = transform.Find("Accessory");
+        if (effectParent == null) effectParent = transform.Find("Effect");
+
+        if (effectParent != null)
+        {
+            sparkleIcon = effectParent.Find("sparkleIcon")?.gameObject;
+            frustratedIcon = effectParent.Find("frustratedIcon")?.gameObject;
+        }
+
+        HideAll();
+    }
+
     private void OnEnable()
     {
-        var customer = GetComponent<Customer>();
-        Type customerType = typeof(Customer);
-        var stateChangeField = customerType.GetField("onStateChange", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-        var changeAppearanceField = customerType.GetField("changeAppearance", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-        var timerEndField = customerType.GetField("onTimerEnd", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-
-        stateChangeField?.SetValue(null, (Action<string>)((Action<string>)stateChangeField.GetValue(null) + OnStateChange));
-        changeAppearanceField?.SetValue(null, (Action<string, string>)((Action<string, string>)changeAppearanceField.GetValue(null) + OnChangeAppearance));
-        timerEndField?.SetValue(null, (Action)((Action)timerEndField.GetValue(null) + OnTimerEnd));
+        SubscribeToCustomerEvents();
     }
 
     private void OnDisable()
     {
-        Type customerType = typeof(Customer);
-        var stateChangeField = customerType.GetField("onStateChange", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-        var changeAppearanceField = customerType.GetField("changeAppearance", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-        var timerEndField = customerType.GetField("onTimerEnd", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-
-        stateChangeField?.SetValue(null, (Action<string>)((Action<string>)stateChangeField.GetValue(null) - OnStateChange));
-        changeAppearanceField?.SetValue(null, (Action<string, string>)((Action<string, string>)changeAppearanceField.GetValue(null) - OnChangeAppearance));
-        timerEndField?.SetValue(null, (Action)((Action)timerEndField.GetValue(null) - OnTimerEnd));
+        UnsubscribeFromCustomerEvents();
     }
 
-    private void Start()
+    private void SubscribeToCustomerEvents()
     {
-        sparkleIcon = effectParent.Find("sparkleIcon").gameObject;
-        frustratedIcon = effectParent.Find("frustratedIcon").gameObject;
+        var type = typeof(Customer);
+        var changeAppearanceField = type.GetField("changeAppearance", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+        var onStateChangeField = type.GetField("onStateChange", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
 
-        HideAll();
-    }
-
-    private void OnChangeAppearance(string color, string accessory)
-    {
-        HideAll();
-
-        Transform neutralSprite = neutralParent.Find("neutral" + Capitalize(color));
-        if (neutralSprite != null)
+        if (changeAppearanceField != null)
         {
-            currentNeutral = neutralSprite.gameObject;
-            currentNeutral.SetActive(true);
+            Action<string, string> changeAppearance = (Action<string, string>)changeAppearanceField.GetValue(null);
+            changeAppearance += UpdateAppearance;
+            changeAppearanceField.SetValue(null, changeAppearance);
         }
 
-        Transform accSprite = accessoryParent.Find(accessory);
-        if (accSprite != null)
+        if (onStateChangeField != null)
         {
-            currentAccessory = accSprite.gameObject;
-            currentAccessory.SetActive(true);
+            Action<string> onStateChange = (Action<string>)onStateChangeField.GetValue(null);
+            onStateChange += UpdateState;
+            onStateChangeField.SetValue(null, onStateChange);
         }
     }
 
-    private void OnStateChange(string state)
+    private void UnsubscribeFromCustomerEvents()
     {
-        switch (state.ToLower())
+        var type = typeof(Customer);
+        var changeAppearanceField = type.GetField("changeAppearance", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+        var onStateChangeField = type.GetField("onStateChange", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+
+        if (changeAppearanceField != null)
         {
-            case "neutral":
-                SetNeutral();
-                break;
-            case "happy":
-                SetHappy();
-                break;
-            case "angry":
-                SetAngry();
-                break;
-        }
-    }
-
-    private void OnTimerEnd()
-    {
-        HideAll();
-    }
-
-    private void SetNeutral()
-    {
-        HideMoodIcons();
-        if (currentHappy != null) currentHappy.SetActive(false);
-        if (currentNeutral != null) currentNeutral.SetActive(true);
-    }
-
-    private void SetHappy()
-    {
-        HideMoodIcons();
-
-        if (currentNeutral != null) currentNeutral.SetActive(false);
-        if (currentHappy != null) currentHappy.SetActive(false);
-
-        string color = currentNeutral != null ? currentNeutral.name.Replace("neutral", "") : "Blue";
-        Transform happySprite = happyParent.Find("happy" + color);
-        if (happySprite != null)
-        {
-            currentHappy = happySprite.gameObject;
-            currentHappy.SetActive(true);
+            Action<string, string> changeAppearance = (Action<string, string>)changeAppearanceField.GetValue(null);
+            changeAppearance -= UpdateAppearance;
+            changeAppearanceField.SetValue(null, changeAppearance);
         }
 
-        if (sparkleIcon != null) sparkleIcon.SetActive(true);
-    }
-
-    private void SetAngry()
-    {
-        HideMoodIcons();
-
-        if (currentHappy != null) currentHappy.SetActive(false);
-        if (currentNeutral != null) currentNeutral.SetActive(true);
-
-        if (frustratedIcon != null) frustratedIcon.SetActive(true);
+        if (onStateChangeField != null)
+        {
+            Action<string> onStateChange = (Action<string>)onStateChangeField.GetValue(null);
+            onStateChange -= UpdateState;
+            onStateChangeField.SetValue(null, onStateChange);
+        }
     }
 
     private void HideAll()
     {
-        foreach (Transform t in neutralParent) t.gameObject.SetActive(false);
-        foreach (Transform t in happyParent) t.gameObject.SetActive(false);
-        foreach (Transform t in accessoryParent) t.gameObject.SetActive(false);
-        foreach (Transform t in effectParent) t.gameObject.SetActive(false);
-
-        currentNeutral = null;
-        currentHappy = null;
-        currentAccessory = null;
+        if (neutralParent != null)
+        {
+            foreach (Transform child in neutralParent)
+                child.gameObject.SetActive(false);
+        }
+        if (happyParent != null)
+        {
+            foreach (Transform child in happyParent)
+                child.gameObject.SetActive(false);
+        }
+        if (accessoryParent != null)
+        {
+            foreach (Transform child in accessoryParent)
+                child.gameObject.SetActive(false);
+        }
+        if (effectParent != null)
+        {
+            foreach (Transform child in effectParent)
+                child.gameObject.SetActive(false);
+        }
     }
 
-    private void HideMoodIcons()
+    private void UpdateAppearance(string color, string accessory)
+    {
+        HideAll();
+
+        currentColor = color;
+
+        string neutralName = "neutral" + Capitalize(color);
+        Transform neutral = neutralParent.Find(neutralName);
+        if (neutral != null)
+        {
+            currentNeutral = neutral.gameObject;
+            currentNeutral.SetActive(true);
+        }
+
+        Transform acc = accessoryParent.Find(accessory);
+        if (acc != null)
+        {
+            currentAccessory = acc.gameObject;
+            currentAccessory.SetActive(true);
+        }
+    }
+
+    private void UpdateState(string state)
     {
         if (sparkleIcon != null) sparkleIcon.SetActive(false);
         if (frustratedIcon != null) frustratedIcon.SetActive(false);
+
+        if (currentNeutral != null) currentNeutral.SetActive(false);
+        if (currentHappy != null) currentHappy.SetActive(false);
+
+        if (state == "happy")
+        {
+            string happyName = "happy" + Capitalize(currentColor);
+            Transform happy = happyParent.Find(happyName);
+            if (happy != null)
+            {
+                currentHappy = happy.gameObject;
+                currentHappy.SetActive(true);
+            }
+
+            if (sparkleIcon != null) sparkleIcon.SetActive(true);
+        }
+        else if (state == "angry")
+        {
+            if (frustratedIcon != null) frustratedIcon.SetActive(true);
+            if (currentNeutral != null) currentNeutral.SetActive(true);
+            else
+            {
+                string neutralName = "neutral" + Capitalize(currentColor);
+                Transform neutral = neutralParent.Find(neutralName);
+                if (neutral != null)
+                {
+                    currentNeutral = neutral.gameObject;
+                    currentNeutral.SetActive(true);
+                }
+            }
+        }
+        else
+        {
+            string neutralName = "neutral" + Capitalize(currentColor);
+            Transform neutral = neutralParent.Find(neutralName);
+            if (neutral != null)
+            {
+                currentNeutral = neutral.gameObject;
+                currentNeutral.SetActive(true);
+            }
+        }
     }
 
-    private string Capitalize(string s)
+    private string Capitalize(string input)
     {
-        if (string.IsNullOrEmpty(s)) return s;
-        return char.ToUpper(s[0]) + s.Substring(1).ToLower();
+        if (string.IsNullOrEmpty(input)) return input;
+        return char.ToUpper(input[0]) + input.Substring(1);
     }
 }
