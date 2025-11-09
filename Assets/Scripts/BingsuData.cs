@@ -16,7 +16,7 @@ public class BingsuData
     private float logoVal = 0.5f;
     private string[] bingsuBaseToppingType = { "strawberry", "mango", "chocolate", "injeolmi", "ube", "pat" };
     private float[] bingsuBaseToppingValues = { 3.0f, 3.0f, 2.0f, 2.5f, 2.5f, 2.0f };
-    private string[] bingsuToppingType = { "tiramisu", "bungeoppang", "chocolate bar", "cheese cake", "matcha ice cream", "vanilla ice cream", "chocolate ice cream", "ube ice cream", "mango ice cream" };
+    private string[] bingsuToppingType = { "tiramisu", "bungeoppang", "chocolateBar", "cheeseCake", "matcha", "vanilla", "chocolate", "ube", "mango" };
     private float[] bingsuToppingValues = { 2.0f, 2.0f, 1.0f, 1.0f, 2.0f, 1.5f, 1.5f, 1.5f, 1.5f };
 
     public BingsuData()

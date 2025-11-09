@@ -3,12 +3,14 @@ using UnityEngine;
 public class BingsuRenderer : MonoBehaviour
 {
     private Bingsu bingsuParent;
-    private SpriteRenderer bingsuSprite;
+    private SpriteRenderer baseRenderer;
+    private SpriteRenderer toppingRenderer;
+    private SpriteRenderer logoRenderer;
 
     [Header("Sprites for Parts")]
-    public Spritep baseSprites;
-    public Sprite logoSprite;
+    public Sprite[] baseSprites;
     public Sprite[] toppingSprites;   
+    public Sprite logoSprite;
 
     private void OnEnable()
     {
@@ -33,46 +35,89 @@ public class BingsuRenderer : MonoBehaviour
     private void Start()
     {
         bingsuParent = transform.parent.GetComponent<Bingsu>();
-        bingsuSprite = GetComponent<SpriteRenderer>();
-        if (bingsuSprite == null)
+        baseRenderer = GetComponent<SpriteRenderer>();
+        if (baseRenderer == null)
         {
-            bingsuSprite = gameObject.AddComponent<SpriteRenderer>();
+            baseRenderer = gameObject.AddComponent<SpriteRenderer>();
         }
+        toppingRenderer = GetComponent<SpriteRenderer>();
+        if (toppingRenderer == null)
+        {
+            toppingRenderer = gameObject.AddComponent<SpriteRenderer>();
+        }
+        logoRenderer = GetComponent<SpriteRenderer>();
+        if (logoRenderer == null)
+        {
+            logoRenderer = gameObject.AddComponent<SpriteRenderer>();
+        }
+        baseRenderer.sprite = null;
+        toppingRenderer.sprite = null;
+        logoRenderer.sprite = null;
     }
 
     // Event callbacks
-    private void ShowBowl() => bingsuSprite.sprite = bowlSprite;
-
-    private void ShowShavedMilk()
+    private void ShowBowl()
     {
-        // You could layer multiple sprites, or just replace
-        bingsuSprite.sprite = shavedMilkSprite;
-    }
-
-    private void ShowDrizzle() => bingsuSprite.sprite = drizzleSprite;
-
-    private void ShowLogo() => bingsuSprite.sprite = logoSprite;
-
-    private void ShowBaseTopping(string type)
-    {
-        // Find matching sprite by name
-        foreach (var sprite in baseToppingSprites)
+        foreach (var sprite in baseSprites)
         {
-            if (sprite.name == type)
+            if (sprite.name == "emptyBowl")
             {
-                bingsuSprite.sprite = sprite;
+                baseRenderer.sprite = sprite;
                 break;
             }
         }
     }
 
-    private void ShowTopping(string type)
+    private void ShowShavedMilk()
     {
-        foreach (var sprite in toppingSprites)
+        foreach (var sprite in baseSprites)
+        {
+            if (sprite.name == "fullBowl")
+            {
+                baseRenderer.sprite = sprite;
+                break;
+            }
+        }
+    }
+
+    private void ShowBaseTopping(string type)
+    {
+        foreach (var sprite in baseSprites)
         {
             if (sprite.name == type)
             {
-                bingsuSprite.sprite = sprite;
+                baseRenderer.sprite = sprite;
+                break;
+            }
+        }
+    }
+
+    private void ShowDrizzle(){
+        string baseName = baseRenderer.sprite.name;
+        baseName = char.ToUpper(baseName[0]) + baseName.Substring(1);
+        string spriteName = "drizzle" + baseName;
+        foreach (var sprite in baseSprites)
+        {
+            if (sprite.name == spriteName)
+            {
+                baseRenderer.sprite = sprite;
+                break;
+            }
+        }
+    }
+
+    private void ShowLogo(){
+        logoRenderer.sprite = logoSprite;
+    }
+
+    private void ShowTopping(string type)
+    {
+        string spriteName = "topping" + char.ToUpper(type[0]) + type.Substring(1);
+        foreach (var sprite in toppingSprites)
+        {
+            if (sprite.name == spriteName)
+            {
+                toppingRenderer.sprite = sprite;
                 break;
             }
         }
