@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Customer : MonoBehaviour, IPointerClickHandler
+public class Customer : MonoBehaviour
 {
     private CustomerData customerData;
 
@@ -119,30 +119,23 @@ public class Customer : MonoBehaviour, IPointerClickHandler
 
     public CustomerData GetCustomerData() => customerData;
 
-    private void OnMouseDown()
+    private void OnDestroy()
     {
-        // Backwards-compatible mouse click support (works without EventSystem)
-        TryDeliverToCurrentOrder();
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        // Support clicks routed through the EventSystem (useful for touch and UI raycasters)
-        TryDeliverToCurrentOrder();
-    }
-
-    private void TryDeliverToCurrentOrder()
-    {
-        Debug.Log("Customer clicked! Trying to deliver order...");
-        OrderCreationManager ocm = FindObjectOfType<OrderCreationManager>();
-        if (ocm != null)
+        // Ensure the dialogue box is cleaned up when the customer is destroyed
+        if (dialogueBoxInstance != null)
         {
-            ocm.DeliverCurrentOrderToCustomer(this);
-        }
-        else
-        {
-            Debug.LogWarning("No OrderCreationManager found!");
+            dialogueBoxInstance.FadeOutAndDestroy();
         }
     }
+
+    private void OnDisable()
+    {
+        // Also handle if the customer is only deactivated (not destroyed)
+        if (dialogueBoxInstance != null)
+        {
+            dialogueBoxInstance.FadeOutAndDestroy();
+        }
+    }
+
 
 }

@@ -132,7 +132,8 @@ public class OrderData
         if (bingsuOrder == null || other.bingsuOrder == null)
             return false;
 
-        return bingsuOrder == other.bingsuOrder; // this uses your BingsuData operator ==
+        return bingsuOrder.Matches(other.bingsuOrder);
     }
+
 
 }

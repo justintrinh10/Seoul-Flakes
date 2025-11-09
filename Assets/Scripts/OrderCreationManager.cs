@@ -111,8 +111,7 @@ public class OrderCreationManager : MonoBehaviour
             if (gameManager.activeCustomers[0])
             {
                 Debug.Log("Attempting delivery to Customer 1...");
-                bool result = gameManager.TryDeliverOrderToCustomer(gameManager.currentCustomers[0], currentOrder);
-                Debug.Log("Delivery result: " + result);
+                DeliverCurrentOrderToCustomer(0);
             }
             else
             {
@@ -133,8 +132,7 @@ public class OrderCreationManager : MonoBehaviour
             if (gameManager.activeCustomers[1])
             {
                 Debug.Log("Attempting delivery to Customer 2...");
-                bool result = gameManager.TryDeliverOrderToCustomer(gameManager.currentCustomers[1], currentOrder);
-                Debug.Log("Delivery result: " + result);
+                DeliverCurrentOrderToCustomer(1);
             }
             else
             {
@@ -154,8 +152,7 @@ public class OrderCreationManager : MonoBehaviour
             if (gameManager.activeCustomers[2])
             {
                 Debug.Log("Attempting delivery to Customer 3...");
-                bool result = gameManager.TryDeliverOrderToCustomer(gameManager.currentCustomers[2], currentOrder);
-                Debug.Log("Delivery result: " + result);
+                DeliverCurrentOrderToCustomer(2);
             }
             else
             {
@@ -437,9 +434,9 @@ public class OrderCreationManager : MonoBehaviour
     /// This will locate the GameManager and ask it to deliver by customer reference. If delivery is attempted
     /// we create a fresh order afterwards.
     /// </summary>
-    public void DeliverCurrentOrderToCustomer(Customer customer)
+    public void DeliverCurrentOrderToCustomer(int customer)
     {
-        if (customer == null)
+        if (gameManager.activeCustomers[customer] == false)
         {
             onError?.Invoke();
             return;
@@ -452,15 +449,7 @@ public class OrderCreationManager : MonoBehaviour
             return;
         }
 
-        GameManager gm = FindObjectOfType<GameManager>();
-        if (gm == null)
-        {
-            Debug.LogWarning("OrderCreationManager.DeliverCurrentOrderToCustomer: No GameManager found in scene.");
-            onError?.Invoke();
-            return;
-        }
-
-        bool accepted = gm.TryDeliverOrderToCustomer(customer, currentOrder);
+        bool accepted = gameManager.TryDeliverOrderToCustomer(customer, currentOrder);
 
         // Remove the current UI order regardless of correctness and start a fresh one
         if (currentOrder != null)

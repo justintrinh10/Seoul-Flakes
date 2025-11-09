@@ -63,37 +63,16 @@ public class GameManager : MonoBehaviour
         Debug.Log($"Spawned customer at spot {spot}");
     }
 
-    public void DeliverOrderToCustomer(int index, Order order)
-    {
-        if (index < 0 || index >= numCustomer || !activeCustomers[index]) return;
-
-        Customer customer = currentCustomers[index];
-        bool correct = customer.DeliverOrder(order);
-        StartCoroutine(HandleCustomerExit(index, correct));
-    }
-
     /// <summary>
     /// Attempt to deliver an order to a specific Customer instance.
     /// Returns true if the customer accepted the order (matched their request), false otherwise.
     /// </summary>
-    public bool TryDeliverOrderToCustomer(Customer customer, Order order)
+    public bool TryDeliverOrderToCustomer(int customer, Order order)
     {
-        if (customer == null || order == null) return false;
+        if (order == null) return false;
 
-        int found = -1;
-        for (int i = 0; i < numCustomer; i++)
-        {
-            if (currentCustomers[i] == customer)
-            {
-                found = i;
-                break;
-            }
-        }
-
-        if (found < 0) return false;
-
-        bool correct = customer.DeliverOrder(order);
-        StartCoroutine(HandleCustomerExit(found, correct));
+        bool correct = currentCustomers[customer].DeliverOrder(order);
+        StartCoroutine(HandleCustomerExit(customer, correct));
         return correct;
     }
 

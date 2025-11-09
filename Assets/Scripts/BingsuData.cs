@@ -254,4 +254,19 @@ public class BingsuData
         toppingType = "";
         logo = false;
     }
+    public bool Matches(BingsuData other)
+    {
+        if (other == null)
+            return false;
+
+        return bowl == other.bowl &&
+            shavedMilk == other.shavedMilk &&
+            baseTopping == other.baseTopping &&
+            string.Equals(baseToppingType, other.baseToppingType, StringComparison.OrdinalIgnoreCase) &&
+            drizzle == other.drizzle &&
+            topping == other.topping &&
+            string.Equals(toppingType, other.toppingType, StringComparison.OrdinalIgnoreCase) &&
+            logo == other.logo;
+    }
+
 }
