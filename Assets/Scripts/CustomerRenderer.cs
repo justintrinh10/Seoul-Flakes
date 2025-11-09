@@ -47,43 +47,23 @@ public class CustomerRenderer : MonoBehaviour
 
     private void SubscribeToCustomerEvents()
     {
-        var type = typeof(Customer);
-        var changeAppearanceField = type.GetField("changeAppearance", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-        var onStateChangeField = type.GetField("onStateChange", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-
-        if (changeAppearanceField != null)
+        Customer customer = GetComponent<Customer>();
+        if (customer != null)
         {
-            Action<string, string> changeAppearance = (Action<string, string>)changeAppearanceField.GetValue(null);
-            changeAppearance += UpdateAppearance;
-            changeAppearanceField.SetValue(null, changeAppearance);
-        }
-
-        if (onStateChangeField != null)
-        {
-            Action<string> onStateChange = (Action<string>)onStateChangeField.GetValue(null);
-            onStateChange += UpdateState;
-            onStateChangeField.SetValue(null, onStateChange);
+            customer.onStateChange += UpdateState;
+            customer.changeAppearance += UpdateAppearance;
+            customer.onFrustratedBlink += HandleFrustratedBlink;
         }
     }
 
     private void UnsubscribeFromCustomerEvents()
     {
-        var type = typeof(Customer);
-        var changeAppearanceField = type.GetField("changeAppearance", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-        var onStateChangeField = type.GetField("onStateChange", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
-
-        if (changeAppearanceField != null)
+        Customer customer = GetComponent<Customer>();
+        if (customer != null)
         {
-            Action<string, string> changeAppearance = (Action<string, string>)changeAppearanceField.GetValue(null);
-            changeAppearance -= UpdateAppearance;
-            changeAppearanceField.SetValue(null, changeAppearance);
-        }
-
-        if (onStateChangeField != null)
-        {
-            Action<string> onStateChange = (Action<string>)onStateChangeField.GetValue(null);
-            onStateChange -= UpdateState;
-            onStateChangeField.SetValue(null, onStateChange);
+            customer.onStateChange -= UpdateState;
+            customer.changeAppearance -= UpdateAppearance;
+            customer.onFrustratedBlink -= HandleFrustratedBlink;
         }
     }
 
@@ -188,10 +168,10 @@ public class CustomerRenderer : MonoBehaviour
 
 private void SetSortingLayerAndOrderForAllRenderers(string layerName)
 {
-    SetSortingLayerForChildren(neutralParent, layerName, 0); // Body gets 0 or low order
-    SetSortingLayerForChildren(happyParent, layerName, 0);   // Body gets 0 or low order
-    SetSortingLayerForChildren(accessoryParent, layerName, 10); // Accessories get higher order (e.g. 10)
-    SetSortingLayerForChildren(effectParent, layerName, 0);  // Effects can be 0 or low order (or a separate layer)
+    SetSortingLayerForChildren(neutralParent, layerName, 1);     // Body base layer
+    SetSortingLayerForChildren(happyParent, layerName, 1);       // Body base layer
+    SetSortingLayerForChildren(accessoryParent, layerName, 2);   // Accessories above body
+    SetSortingLayerForChildren(effectParent, layerName, 3);      // Effects on top of everything
 }
 
 private void SetSortingLayerForChildren(Transform parent, string layerName, int sortingOrder)
@@ -209,6 +189,14 @@ private void SetSortingLayerForChildren(Transform parent, string layerName, int 
             spriteRenderer.sortingLayerName = layerName;
             spriteRenderer.sortingOrder = sortingOrder;
         }
+    }
+}
+
+private void HandleFrustratedBlink(bool isVisible, float blinkRate)
+{
+    if (frustratedIcon != null)
+    {
+        frustratedIcon.SetActive(isVisible);
     }
 }
 

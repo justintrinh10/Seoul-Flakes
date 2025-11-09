@@ -8,10 +8,15 @@ public class Customer : MonoBehaviour
     private float timerPercentAngry = 0.33f;
     private float timer;
     private bool orderDelivered = false;
+    private bool isAngry = false;
+    
+    [SerializeField] private float baseBlinkRate = 1.0f;    // Base time between blinks
+    [SerializeField] private float minBlinkRate = 0.2f;     // Fastest blink rate when timer is almost up
+    public event Action<bool, float> onFrustratedBlink;     // (isVisible, blinkRate)
 
-    public static event Action<string> onStateChange;
-    public static event Action<string, string> changeAppearance;
-    public static event Action<Customer> onTimerEnd;
+    public event Action<string> onStateChange;
+    public event Action<string, string> changeAppearance;
+    public static event Action<Customer> onTimerEnd; // Keep this static as it's for GameManager
 
     void Start()
     {
@@ -21,6 +26,9 @@ public class Customer : MonoBehaviour
         onStateChange?.Invoke(customerData.getState());
         timer = timerDuration;
     }
+
+    private float blinkTimer = 0f;
+    private bool iconVisible = true;
 
     void Update()
     {
@@ -36,7 +44,25 @@ public class Customer : MonoBehaviour
         }
         else if (timer <= timerDuration * timerPercentAngry)
         {
-            onStateChange?.Invoke("angry");
+            if (!isAngry)
+            {
+                isAngry = true;
+                onStateChange?.Invoke("angry");
+            }
+
+            // Calculate blink rate based on remaining time
+            float angerDuration = timerDuration * timerPercentAngry;
+            float remainingAngerTime = timer;
+            float blinkRate = Mathf.Lerp(minBlinkRate, baseBlinkRate, remainingAngerTime / angerDuration);
+            
+            // Handle blinking
+            blinkTimer -= Time.deltaTime;
+            if (blinkTimer <= 0f)
+            {
+                iconVisible = !iconVisible;
+                blinkTimer = blinkRate;
+                onFrustratedBlink?.Invoke(iconVisible, blinkRate);
+            }
         }
     }
 
