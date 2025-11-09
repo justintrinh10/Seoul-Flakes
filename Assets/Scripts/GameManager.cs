@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int numCustomer = 3;
 
     private float customerCoolDownTimer;
-    private Customer[] currentCustomers;
-    private bool[] activeCustomers;
+    public Customer[] currentCustomers;
+    public bool[] activeCustomers;
 
     private Vector3[] customerLocations = {
         new Vector3(-2, 1, 0),

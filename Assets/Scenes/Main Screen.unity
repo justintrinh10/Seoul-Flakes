@@ -840,7 +840,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 142251336}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onCustomer1Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &142251336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4317,7 +4329,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 980378032}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onCustomer2Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &980378032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5875,6 +5899,7 @@ MonoBehaviour:
   customerCoolDownRange: {x: 5, y: 10}
   customerDespawnDelay: 2
   numCustomer: 3
+  activeCustomers: 
 --- !u!4 &1192718754
 Transform:
   m_ObjectHideFlags: 0
@@ -5948,6 +5973,7 @@ MonoBehaviour:
   shavedIceMachine: {fileID: 6500847601340689050, guid: f90344ec0652c44d5a3ec49add79221b, type: 3}
   bungeoppangMinigame: {fileID: 0}
   workspaceManager: {fileID: 1192718755}
+  gameManager: {fileID: 1192718753}
 --- !u!1 &1236584514
 GameObject:
   m_ObjectHideFlags: 0
@@ -6109,7 +6135,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1237822593}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1192718757}
+        m_TargetAssemblyTypeName: OrderCreationManager, Assembly-CSharp
+        m_MethodName: onCustomer3Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1237822593
 MonoBehaviour:
   m_ObjectHideFlags: 0

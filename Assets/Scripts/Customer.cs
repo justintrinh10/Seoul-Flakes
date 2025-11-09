@@ -107,7 +107,7 @@ public class Customer : MonoBehaviour, IPointerClickHandler
     {
         orderDelivered = true;
 
-        if (customerData.getOrder() == deliveredOrder.getOrderData())
+        if (customerData.getOrder().Matches(deliveredOrder.getOrderData()))
         {
             onStateChange?.Invoke("happy");
             return true;

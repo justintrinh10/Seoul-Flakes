@@ -106,17 +106,66 @@ public class OrderCreationManager : MonoBehaviour
 
     public void onCustomer1Click()
     {
-
+        if (gameManager != null)
+        {
+            if (gameManager.activeCustomers[0])
+            {
+                Debug.Log("Attempting delivery to Customer 1...");
+                bool result = gameManager.TryDeliverOrderToCustomer(gameManager.currentCustomers[0], currentOrder);
+                Debug.Log("Delivery result: " + result);
+            }
+            else
+            {
+                Debug.LogWarning("Customer 1 not active!");
+            }
+        }
+        else
+        {
+            Debug.LogError("GameManager reference missing!");
+        }
     }
+
 
     public void onCustomer2Click()
     {
-
+        if (gameManager != null)
+        {
+            if (gameManager.activeCustomers[1])
+            {
+                Debug.Log("Attempting delivery to Customer 2...");
+                bool result = gameManager.TryDeliverOrderToCustomer(gameManager.currentCustomers[1], currentOrder);
+                Debug.Log("Delivery result: " + result);
+            }
+            else
+            {
+                Debug.LogWarning("Customer 2 not active!");
+            }
+        }
+        else
+        {
+            Debug.LogError("GameManager reference missing!");
+        }
     }
 
     public void onCustomer3Click()
     {
-        
+        if (gameManager != null)
+        {
+            if (gameManager.activeCustomers[2])
+            {
+                Debug.Log("Attempting delivery to Customer 3...");
+                bool result = gameManager.TryDeliverOrderToCustomer(gameManager.currentCustomers[2], currentOrder);
+                Debug.Log("Delivery result: " + result);
+            }
+            else
+            {
+                Debug.LogWarning("Customer 3 not active!");
+            }
+        }
+        else
+        {
+            Debug.LogError("GameManager reference missing!");
+        }        
     }
 
     public void onMatchaIceClick()
