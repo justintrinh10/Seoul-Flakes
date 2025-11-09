@@ -24,6 +24,10 @@ public class Customer : MonoBehaviour
     public CustomerDialogueBox dialogueBoxPrefab;
     private CustomerDialogueBox dialogueBoxInstance;
 
+    [Header("Behavior")]
+    [Tooltip("If true, the customer will pick a random order on Start(). Turn off for scene previews.")]
+    [SerializeField] private bool randomizeOnStart = true;
+
     [Header("Dialogue Box Settings")]
     [SerializeField] private Vector3 dialogueOffset = new Vector3(0, 2.2f, 0);
     [SerializeField] private float dialogueScale = 1f;
@@ -34,7 +38,8 @@ public class Customer : MonoBehaviour
     void Start()
     {
         customerData = new CustomerData();
-        customerData.randomCustomer();
+        if (randomizeOnStart)
+            customerData.randomCustomer();
         changeAppearance?.Invoke(customerData.getColor(), customerData.getAccessory());
         onStateChange?.Invoke(customerData.getState());
         timer = timerDuration;
