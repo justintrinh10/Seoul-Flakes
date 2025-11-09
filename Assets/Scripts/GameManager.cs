@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private int numCustomer = 3;
     private Customer[] currentCustomers;
     private bool[] activeCustomers;
+    private Vector2[] customerLocation = { new Vector2(-2, 1), new Vector2(0, 1), new Vector2(2, 1) };
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
         {
             currentCustomers[spot] = newCustomer;
             activeCustomers[spot] = true;
+            newCustomer.transform.position = customerLocation[spot];
         }
     }
     
