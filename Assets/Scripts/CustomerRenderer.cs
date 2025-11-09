@@ -30,7 +30,6 @@ public class CustomerRenderer : MonoBehaviour
             frustratedIcon = effectParent.Find("frustratedIcon")?.gameObject;
         }
 
-        // Call to set sorting layer for all renderers
         SetSortingLayerAndOrderForAllRenderers("Customer");
 
         HideAll();
@@ -211,25 +210,6 @@ private void SetSortingLayerForChildren(Transform parent, string layerName, int 
             spriteRenderer.sortingOrder = sortingOrder;
         }
     }
-}
-
-private void Awake()
-{
-    if (neutralParent == null) neutralParent = transform.Find("Neutral");
-    if (happyParent == null) happyParent = transform.Find("Happy");
-    if (accessoryParent == null) accessoryParent = transform.Find("Accessory");
-    if (effectParent == null) effectParent = transform.Find("Effect");
-
-    if (effectParent != null)
-    {
-        sparkleIcon = effectParent.Find("sparkleIcon")?.gameObject;
-        frustratedIcon = effectParent.Find("frustratedIcon")?.gameObject;
-    }
-
-    // Call to set sorting layer for all renderers
-    SetSortingLayerAndOrderForAllRenderers("Customer");
-
-    HideAll();
 }
 
 }
