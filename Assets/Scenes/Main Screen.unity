@@ -462,7 +462,7 @@ GameObject:
   - component: {fileID: 239961603}
   - component: {fileID: 239961602}
   m_Layer: 0
-  m_Name: middle_0
+  m_Name: MiddleCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -512,8 +512,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1065422671
+  m_SortingLayer: 5
   m_SortingOrder: 5
   m_Sprite: {fileID: -5348974160857761915, guid: b4a0c21849e8a4e3aab4831f07ad1a03, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1320,7 +1320,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 00000000e10e6ccfb1e6095f8dc43262359ad69ab1f07ec037eb7f044509c7c2
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -2902,7 +2902,7 @@ GameObject:
   - component: {fileID: 1471122243}
   - component: {fileID: 1471122242}
   m_Layer: 0
-  m_Name: back_0
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2952,8 +2952,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -815001887
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -4571828015118065507, guid: 5cb4e330c043f417a9bb71e69667e3a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

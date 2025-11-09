@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags: []
   layers:
   - Default
@@ -11,16 +11,16 @@ TagManager:
   - 
   - Water
   - UI
+  - Background
   - 
   - 
+  - Customer
   - 
   - 
+  - Counter
   - 
   - 
-  - 
-  - 
-  - 
-  - 
+  - Bingsu
   - 
   - 
   - 
@@ -41,3 +41,29 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3479965409
+    locked: 0
+  - name: 
+    uniqueID: 1594484401
+    locked: 0
+  - name: Customer
+    uniqueID: 1647494285
+    locked: 0
+  - name: 
+    uniqueID: 2597755445
+    locked: 0
+  - name: WorkingSpace
+    uniqueID: 3229544625
+    locked: 0
+  - name: 
+    uniqueID: 75492151
+    locked: 0
+  - name: Bingsu
+    uniqueID: 3267823941
+    locked: 0
+  m_RenderingLayers:
+  - Default
+  - Layer 1
+  - Layer 2
+  - Layer 3

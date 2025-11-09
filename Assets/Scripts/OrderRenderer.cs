@@ -30,37 +30,51 @@ public class OrderRenderer : MonoBehaviour
         if (orderParent == null)
         {
             Debug.LogError("Order component not found on this GameObject!");
+            return;
         }
 
-        // Initial render
-        orderParent.OrderSpriteSignals();
+        // Create child renderers if missing
         if (trayRenderer == null)
         {
-            trayRenderer = gameObject.AddComponent<SpriteRenderer>();
-
+            GameObject trayObj = new GameObject("TrayRenderer");
+            trayObj.transform.SetParent(transform);
+            trayObj.transform.localPosition = Vector3.zero;
+            trayRenderer = trayObj.AddComponent<SpriteRenderer>();
         }
+
         if (condensedMilkRenderer == null)
         {
-            condensedMilkRenderer = gameObject.AddComponent<SpriteRenderer>();
- 
+            GameObject milkObj = new GameObject("CondensedMilkRenderer");
+            milkObj.transform.SetParent(transform);
+            milkObj.transform.localPosition = Vector3.zero;
+            condensedMilkRenderer = milkObj.AddComponent<SpriteRenderer>();
         }
+
+        // Sorting setup
+        trayRenderer.sortingLayerName = "Bingsu";
+        trayRenderer.sortingOrder = 1;
+        condensedMilkRenderer.sortingLayerName = "Bingsu";
+        condensedMilkRenderer.sortingOrder = 2;
+
+        // Hide initially
+        trayRenderer.sprite = null;
+        condensedMilkRenderer.sprite = null;
+        trayRenderer.enabled = false;
+        condensedMilkRenderer.enabled = false;
+
+        // Trigger any starting state
+        orderParent.OrderSpriteSignals();
     }
 
     private void ShowTray()
     {
-        if (trayRenderer != null)
-        {
-            trayRenderer.sprite = traySprite;
-            trayRenderer.enabled = true;
-        }
+        trayRenderer.sprite = traySprite;
+        trayRenderer.enabled = true;
     }
 
     private void ShowCondensedMilk()
     {
-        if (condensedMilkRenderer != null)
-        {
-            condensedMilkRenderer.sprite = condensedMilkSprite;
-            condensedMilkRenderer.enabled = true;
-        }
+        condensedMilkRenderer.sprite = condensedMilkSprite;
+        condensedMilkRenderer.enabled = true;
     }
 }
