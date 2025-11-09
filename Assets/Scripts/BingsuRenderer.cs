@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class ToppingOffset
@@ -20,9 +21,11 @@ public class BingsuRenderer : MonoBehaviour
     public Sprite[] baseSprites;
     public Sprite[] toppingSprites;
     public Sprite logoSprite;
+    [Header("Debug")]
+    [SerializeField] private bool debugMode = false;
 
     [Header("Topping Offsets")]
-    public ToppingOffset[] toppingOffsets;
+    public List<ToppingOffset> toppingOffsets = new List<ToppingOffset>();
 
     private void OnEnable()
     {
@@ -52,34 +55,21 @@ public class BingsuRenderer : MonoBehaviour
             Debug.LogError("No Bingsu component found on parent!");
         }
 
-        ToppingOffset temp = new ToppingOffset();
-        temp.toppingName = "tiramisu";
-        temp.localPosition = new Vector3(-0.1f, 5.57f, 0.0f);
-        toppingOffsets.Append(temp);
-        temp.toppingName = "bungeoppang";
-        temp.localPosition = new Vector3(-0.39f, 7.56f, 0.0f);
-        toppingOffsets.Append(temp);
-        temp.toppingName = "chocolateBar";
-        temp.localPosition = new Vector3(2.67f, 4.74f, 0.0f);
-        toppingOffsets.Append(temp);
-        temp.toppingName = "cheeseCake";
-        temp.localPosition = new Vector3(-0.02f, 5.02f, 0f);
-        toppingOffsets.Append(temp);
-        temp.toppingName = "matcha";
-        temp.localPosition = new Vector3(-0.07f, 5.58f, 0f);
-        toppingOffsets.Append(temp);
-        temp.toppingName = "vanilla";
-        temp.localPosition = new Vector3(-0.07f, 5.58f, 0f);
-        toppingOffsets.Append(temp);
-        temp.toppingName = "chocolate";
-        temp.localPosition = new Vector3(-0.07f, 5.58f, 0f);
-        toppingOffsets.Append(temp);
-        temp.toppingName = "ube";
-        temp.localPosition = new Vector3(-0.07f, 5.58f, 0f);
-        toppingOffsets.Append(temp);
-        temp.toppingName = "mango";
-        temp.localPosition = new Vector3(-0.07f, 5.58f, 0f);
-        toppingOffsets.Append(temp);
+        // populate default topping offsets (only add if list is empty)
+        if (toppingOffsets == null)
+            toppingOffsets = new List<ToppingOffset>();
+        if (toppingOffsets.Count == 0)
+        {
+            toppingOffsets.Add(new ToppingOffset { toppingName = "tiramisu", localPosition = new Vector3(-0.1f, 5.57f, 0.0f) });
+            toppingOffsets.Add(new ToppingOffset { toppingName = "bungeoppang", localPosition = new Vector3(-0.39f, 7.56f, 0.0f) });
+            toppingOffsets.Add(new ToppingOffset { toppingName = "chocolateBar", localPosition = new Vector3(2.67f, 4.74f, 0.0f) });
+            toppingOffsets.Add(new ToppingOffset { toppingName = "cheeseCake", localPosition = new Vector3(-0.02f, 5.02f, 0f) });
+            toppingOffsets.Add(new ToppingOffset { toppingName = "matcha", localPosition = new Vector3(-0.07f, 5.58f, 0f) });
+            toppingOffsets.Add(new ToppingOffset { toppingName = "vanilla", localPosition = new Vector3(-0.07f, 5.58f, 0f) });
+            toppingOffsets.Add(new ToppingOffset { toppingName = "chocolate", localPosition = new Vector3(-0.07f, 5.58f, 0f) });
+            toppingOffsets.Add(new ToppingOffset { toppingName = "ube", localPosition = new Vector3(-0.07f, 5.58f, 0f) });
+            toppingOffsets.Add(new ToppingOffset { toppingName = "mango", localPosition = new Vector3(-0.07f, 5.58f, 0f) });
+        }
 
         // Create child renderers if they don't exist
         if (baseRenderer == null)
@@ -119,19 +109,19 @@ public class BingsuRenderer : MonoBehaviour
     // --- Event callbacks ---
     private void ShowBowl()
     {
-        baseRenderer.sprite = FindSprite(baseSprites, "emptyBowl");
+        baseRenderer.sprite = FindSpriteFlexible(baseSprites, "emptyBowl");
         baseRenderer.enabled = true;
     }
 
     private void ShowShavedMilk()
     {
-        baseRenderer.sprite = FindSprite(baseSprites, "fullBowl");
+        baseRenderer.sprite = FindSpriteFlexible(baseSprites, "fullBowl");
         baseRenderer.enabled = true;
     }
 
     private void ShowBaseTopping(string type)
     {
-        baseRenderer.sprite = FindSprite(baseSprites, type);
+        baseRenderer.sprite = FindSpriteFlexible(baseSprites, type);
         baseRenderer.enabled = true;
     }
 
@@ -141,7 +131,7 @@ public class BingsuRenderer : MonoBehaviour
 
         string baseName = baseRenderer.sprite.name;
         string spriteName = "drizzle" + char.ToUpper(baseName[0]) + baseName.Substring(1);
-        baseRenderer.sprite = FindSprite(baseSprites, spriteName);
+        baseRenderer.sprite = FindSpriteFlexible(baseSprites, spriteName);
         baseRenderer.enabled = true;
     }
 
@@ -154,8 +144,8 @@ public class BingsuRenderer : MonoBehaviour
 
     private void ShowTopping(string type)
     {
-        string spriteName = "topping" + char.ToUpper(type[0]) + type.Substring(1);
-        toppingRenderer.sprite = FindSprite(toppingSprites, spriteName);
+    string spriteName = "topping" + char.ToUpper(type[0]) + type.Substring(1);
+    toppingRenderer.sprite = FindSpriteFlexible(toppingSprites, spriteName);
 
         // Apply local position for this topping type
         Vector3 offset = Vector3.zero;
@@ -173,13 +163,43 @@ public class BingsuRenderer : MonoBehaviour
     }
 
     // --- Utility ---
-    private Sprite FindSprite(Sprite[] sprites, string name)
+    // Flexible sprite lookup similar to CustomerDialogueBox: exact, starts-with, contains, normalized
+    private Sprite FindSpriteFlexible(Sprite[] sprites, string expectedName)
     {
+        if (sprites == null || expectedName == null) return null;
+
         foreach (var s in sprites)
         {
-            if (s.name == name) return s;
+            if (s != null && s.name == expectedName) return s;
         }
-        Debug.LogWarning($"Sprite '{name}' not found!");
+
+        string expLower = expectedName.ToLowerInvariant();
+        foreach (var s in sprites)
+        {
+            if (s == null) continue;
+            string name = s.name.ToLowerInvariant();
+            if (name.StartsWith(expLower)) return s;
+        }
+
+        foreach (var s in sprites)
+        {
+            if (s == null) continue;
+            string name = s.name.ToLowerInvariant();
+            if (name.Contains(expLower)) return s;
+        }
+
+        string alt = expLower.Replace("_", "").Replace("-", "");
+        foreach (var s in sprites)
+        {
+            if (s == null) continue;
+            string name = s.name.ToLowerInvariant().Replace("_", "").Replace("-", "");
+            if (name.Contains(alt)) return s;
+        }
+
+        if (debugMode)
+        {
+            Debug.LogWarning($"BingsuRenderer: sprite '{expectedName}' not found among {sprites.Length} sprites: {string.Join(",", System.Array.ConvertAll(sprites, x => x==null?"<null>":x.name))}");
+        }
         return null;
     }
 }

@@ -27,25 +27,16 @@ public class CustomerDialogueBox : MonoBehaviour
     [Header("Animation Settings")]
     [SerializeField] private float fadeDuration = 0.5f;
     [SerializeField] private float popScaleMultiplier = 1.15f;
+    [Header("Debug")]
+    [SerializeField] private bool debugMode = false;
 
     private bool isFadingOut = false;
     private float dialogueScale = 1f;
+    private bool dialogueInitialized = false;
 
     void Start()
     {
-        // Create or reuse renderers
-        textBoxRenderer = FindOrCreateRenderer("TextBoxRenderer", Vector3.zero, 4);
-        baseIconRenderer = FindOrCreateRenderer("BaseIconRenderer", baseIconOffset, 5);
-        toppingIconRenderer = FindOrCreateRenderer("ToppingIconRenderer", toppingIconOffset, 5);
-        drizzleIconRenderer = FindOrCreateRenderer("DrizzleIconRenderer", drizzleIconOffset, 5);
-
-        // Always show text box
-        if (textBoxRenderer != null)
-        {
-            textBoxRenderer.sprite = textBox;
-            textBoxRenderer.enabled = true;
-        }
-
+        EnsureDialogueInitialized();
         // Start invisible + tiny
         SetAlpha(0f);
         transform.localScale = Vector3.zero;
@@ -77,8 +68,29 @@ public class CustomerDialogueBox : MonoBehaviour
         return sr;
     }
 
+    private void EnsureDialogueInitialized()
+    {
+        if (dialogueInitialized) return;
+
+        // Create or reuse renderers
+        textBoxRenderer = FindOrCreateRenderer("TextBoxRenderer", Vector3.zero, 4);
+        baseIconRenderer = FindOrCreateRenderer("BaseIconRenderer", baseIconOffset, 5);
+        toppingIconRenderer = FindOrCreateRenderer("ToppingIconRenderer", toppingIconOffset, 5);
+        drizzleIconRenderer = FindOrCreateRenderer("DrizzleIconRenderer", drizzleIconOffset, 5);
+
+        // Always set text box sprite if available
+        if (textBoxRenderer != null)
+        {
+            textBoxRenderer.sprite = textBox;
+            textBoxRenderer.enabled = textBox != null;
+        }
+
+        dialogueInitialized = true;
+    }
+
     public void CreateDialogueBox(BingsuData bData, Transform customer, Vector3? offset = null, float scale = 1f)
     {
+        EnsureDialogueInitialized();
         bingsuData = bData;
         customerTransform = customer;
         dialogueScale = scale;
@@ -98,29 +110,41 @@ public class CustomerDialogueBox : MonoBehaviour
         {
             // Base icon
             string baseIconName = "base" + char.ToUpper(bingsuData.getBaseToppingType()[0]) + bingsuData.getBaseToppingType().Substring(1);
-            foreach (var s in baseSprites)
+            var baseSpriteFound = FindSpriteFlexible(baseSprites, baseIconName);
+            if (baseSpriteFound != null)
             {
-                if (s.name == baseIconName)
+                baseIconRenderer.sprite = baseSpriteFound;
+                baseIconRenderer.enabled = true;
+                baseIconRenderer.transform.localScale = Vector3.one;
+                baseIconRenderer.transform.localPosition = baseIconOffset;
+            }
+            else if (debugMode)
+            {
+                Debug.Log($"CustomerDialogueBox: looking for base '{baseIconName}' found=False (baseSprites count={(baseSprites==null?0:baseSprites.Length)})");
+                if (baseSprites != null)
                 {
-                    baseIconRenderer.sprite = s;
-                    baseIconRenderer.enabled = true;
-                    baseIconRenderer.transform.localScale = Vector3.one;
-                    baseIconRenderer.transform.localPosition = baseIconOffset;
-                    break;
+                    string names = string.Join(",", System.Array.ConvertAll(baseSprites, s => s==null?"<null>":s.name));
+                    Debug.Log("CustomerDialogueBox: baseSprites names = " + names);
                 }
             }
 
             // Topping icon
             string toppingIconName = "topping" + char.ToUpper(bingsuData.getToppingType()[0]) + bingsuData.getToppingType().Substring(1);
-            foreach (var s in toppingSprites)
+            var toppingSpriteFound = FindSpriteFlexible(toppingSprites, toppingIconName);
+            if (toppingSpriteFound != null)
             {
-                if (s.name == toppingIconName)
+                toppingIconRenderer.sprite = toppingSpriteFound;
+                toppingIconRenderer.enabled = true;
+                toppingIconRenderer.transform.localScale = Vector3.one;
+                toppingIconRenderer.transform.localPosition = toppingIconOffset;
+            }
+            else if (debugMode)
+            {
+                Debug.Log($"CustomerDialogueBox: looking for topping '{toppingIconName}' found=False (toppingSprites count={(toppingSprites==null?0:toppingSprites.Length)})");
+                if (toppingSprites != null)
                 {
-                    toppingIconRenderer.sprite = s;
-                    toppingIconRenderer.enabled = true;
-                    toppingIconRenderer.transform.localScale = Vector3.one;
-                    toppingIconRenderer.transform.localPosition = toppingIconOffset;
-                    break;
+                    string names = string.Join(",", System.Array.ConvertAll(toppingSprites, s => s==null?"<null>":s.name));
+                    Debug.Log("CustomerDialogueBox: toppingSprites names = " + names);
                 }
             }
 
@@ -140,6 +164,12 @@ public class CustomerDialogueBox : MonoBehaviour
         if (customerTransform != null && !isFadingOut)
         {
             transform.position = customerTransform.position + textBoxOffset;
+        }
+        // debug: ensure renderers enabled when visible
+        if (debugMode)
+        {
+            if (textBoxRenderer != null && textBoxRenderer.sprite == null)
+                Debug.LogWarning("CustomerDialogueBox: textBox sprite is null");
         }
     }
 
@@ -212,5 +242,46 @@ public class CustomerDialogueBox : MonoBehaviour
         Color c = sr.color;
         c.a = alpha;
         sr.color = c;
+    }
+
+    // Flexible sprite lookup: exact match, then case-insensitive starts-with, then contains, allowing suffixes like _0
+    private Sprite FindSpriteFlexible(Sprite[] sprites, string expectedName)
+    {
+        if (sprites == null || expectedName == null) return null;
+
+        // 1) exact match
+        foreach (var s in sprites)
+        {
+            if (s != null && s.name == expectedName) return s;
+        }
+
+        string expLower = expectedName.ToLowerInvariant();
+
+        // 2) starts with (case-insensitive)
+        foreach (var s in sprites)
+        {
+            if (s == null) continue;
+            string name = s.name.ToLowerInvariant();
+            if (name.StartsWith(expLower)) return s;
+        }
+
+        // 3) contains (case-insensitive)
+        foreach (var s in sprites)
+        {
+            if (s == null) continue;
+            string name = s.name.ToLowerInvariant();
+            if (name.Contains(expLower)) return s;
+        }
+
+        // 4) try replacing underscores/hyphens in expected name
+        string alt = expLower.Replace("_", "").Replace("-", "");
+        foreach (var s in sprites)
+        {
+            if (s == null) continue;
+            string name = s.name.ToLowerInvariant().Replace("_", "").Replace("-", "");
+            if (name.Contains(alt)) return s;
+        }
+
+        return null;
     }
 }

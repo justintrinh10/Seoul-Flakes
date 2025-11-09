@@ -68,12 +68,20 @@ public class OrderRenderer : MonoBehaviour
 
     private void ShowTray()
     {
+        if (traySprite == null)
+        {
+            Debug.LogWarning("OrderRenderer: traySprite is not assigned.");
+        }
         trayRenderer.sprite = traySprite;
         trayRenderer.enabled = true;
     }
 
     private void ShowCondensedMilk()
     {
+        if (condensedMilkSprite == null)
+        {
+            Debug.LogWarning("OrderRenderer: condensedMilkSprite is not assigned.");
+        }
         condensedMilkRenderer.sprite = condensedMilkSprite;
         condensedMilkRenderer.enabled = true;
     }

@@ -20,15 +20,23 @@ public class Order : MonoBehaviour
 
     public void OrderSpriteSignals()
     {
-        if (orderData.hasTray())
+        if (orderData != null)
         {
-            onAddTray?.Invoke();
-        }
-        if (orderData.hasCondenseMilk())
-            onAddCondensedMilk?.Invoke();
+            if (orderData.hasTray())
+            {
+                onAddTray?.Invoke();
+            }
+            if (orderData.hasCondenseMilk())
+                onAddCondensedMilk?.Invoke();
 
-        if (bingsu != null && orderData.getBingsuOrder().hasBowl())
-            bingsu.createBingsu(orderData.getBingsuOrder());
+            var bData = orderData.getBingsuOrder();
+            if (bingsu != null && bData != null && bData.hasBowl())
+                bingsu.createBingsu(bData);
+        }
+        else
+        {
+            Debug.LogWarning("OrderSpriteSignals called but orderData is null. Initialization order may be incorrect.");
+        }
     }
 
     public void createOrder()

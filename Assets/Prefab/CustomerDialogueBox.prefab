@@ -318,6 +318,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f8cc2499dfc401eb660d4abfb8212d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomerDialogueBox
+  textBoxOffset: {x: 0, y: 2.2, z: 0}
+  baseIconOffset: {x: -1, y: 0.3, z: 0}
+  toppingIconOffset: {x: 1, y: 0.3, z: 0}
+  drizzleIconOffset: {x: 0, y: -0.2, z: 0}
   textBox: {fileID: 6639126460929552292, guid: 162304f2614b44b18ba47017f19e8721, type: 3}
   baseSprites:
   - {fileID: 2412960935659822649, guid: 732939de3e6344605a98f84dae526a72, type: 3}
@@ -339,6 +343,7 @@ MonoBehaviour:
   drizzleSprite: {fileID: -5307152082931701083, guid: 247335f6a71e342488a4cadb15c0379c, type: 3}
   fadeDuration: 0.5
   popScaleMultiplier: 1.15
+  debugMode: 1
 --- !u!1 &7875864071549717562
 GameObject:
   m_ObjectHideFlags: 0
