@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,12 +6,14 @@ public class GameManager : MonoBehaviour
     private Vector2 customerCoolDownRange = new Vector2(5, 10);
     private float customerCoolDownTimer;
     private int numCustomer = 3;
-    private Queue<Customer> customerQueue = new Queue<Customer>();
+    private Customer[] currentCustomers;
+    private bool[] activeCustomers;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        customerCoolDownTimer = UnityEngine.Random.Range(customerCoolDownRange.x, customerCoolDownRange.y);
+        clearAllCustomers();
+        customerCoolDownTimer = 1.0f;
     }
 
     // Update is called once per frame
@@ -27,8 +28,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void queueCustomer(Customer newCutomer)
+    void queueCustomer(Customer newCustomer)
     {
-        
+        int spot = findFreeCustomerSpace();
+        if(spot >= 0)
+        {
+            currentCustomers[spot] = newCustomer;
+            activeCustomers[spot] = true;
+        }
+    }
+    
+    int findFreeCustomerSpace()
+    {
+        int spot = -1;
+        for (int i = 0; i < numCustomer; i++)
+        {
+            if (!activeCustomers[i])
+            {
+                spot = i;
+                break;
+            }
+        }
+        return spot;
+    }
+    
+    void clearAllCustomers()
+    {
+        for(int i = 0; i < numCustomer; i++)
+        {
+            activeCustomers[i] = false;
+        }
     }
 }
