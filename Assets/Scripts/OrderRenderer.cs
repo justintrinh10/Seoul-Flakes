@@ -59,8 +59,6 @@ public class OrderRenderer : MonoBehaviour
         condensedMilkRenderer.sortingOrder = 2;
 
         // Hide initially
-        trayRenderer.sprite = null;
-        condensedMilkRenderer.sprite = null;
         trayRenderer.enabled = false;
         condensedMilkRenderer.enabled = false;
 

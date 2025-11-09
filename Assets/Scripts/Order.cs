@@ -12,7 +12,8 @@ public class Order : MonoBehaviour
     {
         orderData = new OrderData();
         orderData.setTray();
-        onAddTray?.Invoke();
+        orderData.setCondenseMilk();
+        OrderSpriteSignals();
         transform.position = new Vector3(-0.38f, -3.12f, 0);
         transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
     }
@@ -32,6 +33,8 @@ public class Order : MonoBehaviour
 
     public void createOrder()
     {
+        orderData.setTray();
+        orderData.setCondenseMilk();
         orderData.randomOrder();
         OrderSpriteSignals();
     }
