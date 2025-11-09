@@ -869,13 +869,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 029dced6297e34f228a896fec4bff6fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BingsuRenderer
-  bowlSprite: {fileID: 5222127748002684979, guid: be594765f58e14486ac7bcc49bba37b7, type: 3}
-  shavedMilkSprite: {fileID: 2005194919484217058, guid: a5254a10eaa1543929f6164893d9812b, type: 3}
-  drizzleSprite: {fileID: 0}
-  baseToppingSprites:
-  - {fileID: 0}
+  baseSprites:
+  - {fileID: -5209720356119618007, guid: 0db2477738a984925944aa2d77705e25, type: 3}
+  - {fileID: 8663039325962945969, guid: 3aa7ec423020749e2b4ebb620bd1b238, type: 3}
+  - {fileID: -4282447514482882457, guid: 5c94679fb87c8492ea61226eee8da838, type: 3}
+  - {fileID: -2833539267054204079, guid: d8c8c6bba788e42579b5179d1ee85391, type: 3}
+  - {fileID: 3341020452749222682, guid: 3d5e55b9005f542a2966ece8a259a5b2, type: 3}
+  - {fileID: -5220329423199270156, guid: d1433943cbd4744ebb069c5a6cf750a9, type: 3}
+  - {fileID: -1626350414650533361, guid: 943a32c5c131d45e9bab14b7aad8f0ae, type: 3}
+  - {fileID: 5222127748002684979, guid: be594765f58e14486ac7bcc49bba37b7, type: 3}
+  - {fileID: 2005194919484217058, guid: a5254a10eaa1543929f6164893d9812b, type: 3}
+  - {fileID: 6717080577775038037, guid: fad28b69b389e41fdaa1e9a67f597af8, type: 3}
+  - {fileID: 8617278338890539712, guid: e8c9a4ce233764babb09098c60dde480, type: 3}
+  - {fileID: -7842436168367341130, guid: 5c82527906b434898bed235db79b463d, type: 3}
+  - {fileID: 1669490993913548592, guid: 0907422028c6c464a9223433880af401, type: 3}
+  - {fileID: 2146296729333445364, guid: 7fac373102dd649c28104f5036fb97f6, type: 3}
+  toppingSprites:
+  - {fileID: 2901699187683354842, guid: 8b595973f0dc24ffdb5a537d897f0b81, type: 3}
+  - {fileID: -5088002149627233912, guid: 133abf2fc304c452e8341dea9c3d1735, type: 3}
+  - {fileID: -810217800436384057, guid: 6cbc0c2459a114de6b740011caec6557, type: 3}
+  - {fileID: 8086583369914335595, guid: c5b419a21c8384a059875805cc1bf76b, type: 3}
+  - {fileID: -6649173567272681430, guid: 7ac9a7c84fb3b4d5baa282840dce23b8, type: 3}
+  - {fileID: 4071364123624227829, guid: 9eb10229a0bb54b6696c88b2e5501f96, type: 3}
+  - {fileID: 6074287913033690821, guid: 4dc7e7a6c59834ef9bb7329da8ad3a0e, type: 3}
+  - {fileID: 5419653930282111477, guid: 74e007f05d06c446785e8f5870c0e464, type: 3}
+  - {fileID: 3669784610528951490, guid: b1efb12a062a144b5961598184243acd, type: 3}
   logoSprite: {fileID: -2135684610788040097, guid: f8fd2be24615e4aa282cda503a414c93, type: 3}
-  toppingSprites: []
 --- !u!1 &1862715326
 GameObject:
   m_ObjectHideFlags: 0
