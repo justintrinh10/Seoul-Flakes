@@ -36,6 +36,16 @@ public class OrderCreationManager : MonoBehaviour
             shavedIceMachine = FindObjectOfType<ShavedIceMachine>();
         if (bungeoppangMinigame == null)
             bungeoppangMinigame = FindObjectOfType<BungeoppangMinigame>();
+
+        // Basic prefab validation (helpful runtime errors if scene not wired)
+        if (orderPrefab == null)
+        {
+            Debug.LogWarning("OrderCreationManager: 'orderPrefab' is not assigned in the inspector. CreateNewOrder will fail until it is assigned.");
+        }
+        if (bingsuPrefab == null)
+        {
+            Debug.LogWarning("OrderCreationManager: 'bingsuPrefab' is not assigned in the inspector. CreateNewOrder will fail until it is assigned.");
+        }
     }
 
     public void CreateNewOrder()
@@ -46,18 +56,51 @@ public class OrderCreationManager : MonoBehaviour
         if (currentBingsu != null)
             Destroy(currentBingsu.gameObject);
 
+        // Validate prefabs
+        if (orderPrefab == null || bingsuPrefab == null)
+        {
+            Debug.LogError("OrderCreationManager.CreateNewOrder: Missing prefab(s). Ensure 'orderPrefab' and 'bingsuPrefab' are assigned in the inspector.");
+            onError?.Invoke();
+            return;
+        }
+
         // Instantiate fresh ones
         GameObject orderObj = Instantiate(orderPrefab, new Vector3(-0.38f, -3.12f, 0), Quaternion.identity);
         orderObj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
         currentOrder = orderObj.GetComponent<Order>();
+        if (currentOrder == null)
+        {
+            Debug.LogError("OrderCreationManager.CreateNewOrder: Instantiated 'orderPrefab' does not contain an Order component.");
+            Destroy(orderObj);
+            onError?.Invoke();
+            return;
+        }
 
         GameObject bingsuObj = Instantiate(bingsuPrefab, new Vector3(-0.51f, -2.65f, 0), Quaternion.identity);
         bingsuObj.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
         currentBingsu = bingsuObj.GetComponent<Bingsu>();
+        if (currentBingsu == null)
+        {
+            Debug.LogError("OrderCreationManager.CreateNewOrder: Instantiated 'bingsuPrefab' does not contain a Bingsu component.");
+            Destroy(orderObj);
+            Destroy(bingsuObj);
+            onError?.Invoke();
+            return;
+        }
 
+        // Wire them together
         currentOrder.AssignBingsu(currentBingsu);
 
+        // Update visuals
         displayOrder();
+    }
+
+    /// <summary>
+    /// Public helper to create a new, empty order from scratch. Can be wired to a UI Button.
+    /// </summary>
+    public void CreateOrderFromScratch()
+    {
+        CreateNewOrder();
     }
 
     public void onMatchaIceClick()
