@@ -106,6 +106,11 @@ public class BingsuRenderer : MonoBehaviour
             logoRenderer.sortingOrder = 5;
             logoRenderer.enabled = false;
         }
+
+        // Ensure any serialized/default sprites on prefab are cleared so newly-instantiated
+        // bingsu prefabs don't appear pre-built. This handles the case where Bingsu
+        // fired onClearBingsu() earlier (before these renderers existed).
+        ClearBingsu();
     }
 
     // --- Event callbacks ---
