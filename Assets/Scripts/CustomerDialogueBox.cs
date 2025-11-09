@@ -14,8 +14,8 @@ public class CustomerDialogueBox : MonoBehaviour
 
     [Header("Offsets")]
     [SerializeField] private Vector3 textBoxOffset = new Vector3(0f, 2.2f, 0f);
-    [SerializeField] private Vector3 baseIconOffset = new Vector3(-1f, 0.3f, 0f);
-    [SerializeField] private Vector3 toppingIconOffset = new Vector3(1f, 0.3f, 0f);
+    [SerializeField] private Vector3 baseIconOffset = new Vector3(-0.7f, 1f, 0f);
+    [SerializeField] private Vector3 toppingIconOffset = new Vector3(0.7f, 1f, 0f);
     [SerializeField] private Vector3 drizzleIconOffset = new Vector3(0f, -0.2f, 0f);
 
     [Header("Sprites for Parts")]
@@ -156,22 +156,27 @@ public class CustomerDialogueBox : MonoBehaviour
                 drizzleIconRenderer.transform.localScale = Vector3.one;
                 drizzleIconRenderer.transform.localPosition = drizzleIconOffset;
             }
+            drizzleIconRenderer.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+            toppingIconRenderer.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+            baseIconRenderer.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+            textBoxRenderer.transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+            drizzleIconRenderer.transform.position = drizzleIconOffset + transform.position;
+            toppingIconRenderer.transform.position = toppingIconOffset + transform.position;
+            toppingIconRenderer.transform.position -= new Vector3(0.6f, 0f, 0f);
+            baseIconRenderer.transform.position = baseIconOffset + transform.position;
+            baseIconRenderer.transform.position += new Vector3(0.6f, 0f, 0f);
         }
     }
 
-    void Update()
+void Update()
+{
+    if (customerTransform != null && !isFadingOut)
     {
-        if (customerTransform != null && !isFadingOut)
-        {
-            transform.position = customerTransform.position + textBoxOffset;
-        }
-        // debug: ensure renderers enabled when visible
-        if (debugMode)
-        {
-            if (textBoxRenderer != null && textBoxRenderer.sprite == null)
-                Debug.LogWarning("CustomerDialogueBox: textBox sprite is null");
-        }
+        // Follow customer in world space
+        transform.position = customerTransform.position + textBoxOffset;
     }
+}
+
 
     private IEnumerator FadeInAndPop()
     {
