@@ -35,6 +35,7 @@ public class BingsuRenderer : MonoBehaviour
         Bingsu.onAddLogo += ShowLogo;
         Bingsu.onAddBaseTopping += ShowBaseTopping;
         Bingsu.onAddTopping += ShowTopping;
+        Bingsu.onClearBingsu += ClearBingsu;
     }
 
     private void OnDisable()
@@ -45,6 +46,7 @@ public class BingsuRenderer : MonoBehaviour
         Bingsu.onAddLogo -= ShowLogo;
         Bingsu.onAddBaseTopping -= ShowBaseTopping;
         Bingsu.onAddTopping -= ShowTopping;
+        Bingsu.onClearBingsu -= ClearBingsu;
     }
 
     private void Start()
@@ -144,8 +146,8 @@ public class BingsuRenderer : MonoBehaviour
 
     private void ShowTopping(string type)
     {
-    string spriteName = "topping" + char.ToUpper(type[0]) + type.Substring(1);
-    toppingRenderer.sprite = FindSpriteFlexible(toppingSprites, spriteName);
+        string spriteName = "topping" + char.ToUpper(type[0]) + type.Substring(1);
+        toppingRenderer.sprite = FindSpriteFlexible(toppingSprites, spriteName);
 
         // Apply local position for this topping type
         Vector3 offset = Vector3.zero;
@@ -160,6 +162,17 @@ public class BingsuRenderer : MonoBehaviour
         toppingRenderer.transform.localPosition = offset;
 
         toppingRenderer.enabled = true;
+    }
+    
+    private void ClearBingsu()
+    {
+        baseRenderer.enabled = false;
+        baseRenderer.sprite = null;
+        toppingRenderer.enabled = false;
+        toppingRenderer.sprite = null;
+        logoRenderer.enabled = false;
+        logoRenderer.sprite = null;
+
     }
 
     // --- Utility ---
