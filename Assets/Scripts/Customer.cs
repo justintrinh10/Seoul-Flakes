@@ -3,45 +3,56 @@ using UnityEngine;
 
 public class Customer : MonoBehaviour
 {
-    CustomerData customerData;
+    private CustomerData customerData;
     private float timerDuration = 30.0f;
     private float timerPercentAngry = 0.33f;
     private float timer;
-    private static event Action<string> onStateChange;
-    private static event Action<string, string> changeAppearance;
-    private static event Action onTimerEnd;
+    private bool orderDelivered = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public static event Action<string> onStateChange;
+    public static event Action<string, string> changeAppearance;
+    public static event Action<Customer> onTimerEnd;
+
     void Start()
     {
+        customerData = new CustomerData();
         customerData.randomCustomer();
         changeAppearance?.Invoke(customerData.getColor(), customerData.getAccessory());
         onStateChange?.Invoke(customerData.getState());
         timer = timerDuration;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (orderDelivered) return;
+
         timer -= Time.deltaTime;
+
         if (timer <= 0.0f)
         {
-            onTimerEnd?.Invoke();
+            orderDelivered = true;
+            onStateChange?.Invoke("angry");
+            onTimerEnd?.Invoke(this);
         }
         else if (timer <= timerDuration * timerPercentAngry)
         {
             onStateChange?.Invoke("angry");
         }
     }
-    
-    public bool deliverOrder(Order deliveredOrder)
+
+    public bool DeliverOrder(Order deliveredOrder)
     {
+        orderDelivered = true;
+
         if (customerData.getOrder() == deliveredOrder.getOrderData())
         {
             onStateChange?.Invoke("happy");
             return true;
         }
+
         onStateChange?.Invoke("angry");
         return false;
     }
+
+    public CustomerData GetCustomerData() => customerData;
 }

@@ -1,55 +1,105 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     [Header("Customer Settings")]
-    public GameObject customerPrefab;
-    private Vector2 customerCoolDownRange = new Vector2(5, 10);
-    private float customerCoolDownTimer;
-    private int numCustomer = 3;
+    [SerializeField] private GameObject customerPrefab;
+    [SerializeField] private Vector2 customerCoolDownRange = new Vector2(5f, 10f);
+    [SerializeField] private float customerDespawnDelay = 2f;
+    [SerializeField] private int numCustomer = 3;
 
+    private float customerCoolDownTimer;
     private Customer[] currentCustomers;
     private bool[] activeCustomers;
-    private Vector3[] customerLocation = {
+
+    private Vector3[] customerLocations = {
         new Vector3(-2, 1, 0),
         new Vector3(0, 1, 0),
         new Vector3(2, 1, 0)
     };
 
+    void OnEnable()
+    {
+        Customer.onTimerEnd += HandleCustomerTimerEnd;
+    }
+
+    void OnDisable()
+    {
+        Customer.onTimerEnd -= HandleCustomerTimerEnd;
+    }
+
     void Start()
     {
         currentCustomers = new Customer[numCustomer];
         activeCustomers = new bool[numCustomer];
-        clearAllCustomers();
+        ClearAllCustomers();
         customerCoolDownTimer = 1.0f;
     }
 
     void Update()
     {
         customerCoolDownTimer -= Time.deltaTime;
+
         if (customerCoolDownTimer <= 0.0f)
         {
-            queueCustomer();
+            QueueCustomer();
             customerCoolDownTimer = UnityEngine.Random.Range(customerCoolDownRange.x, customerCoolDownRange.y);
         }
     }
 
-    void queueCustomer()
+    public void QueueCustomer()
     {
-        int spot = findFreeCustomerSpace();
-        if (spot >= 0)
-        {
-            GameObject customerObj = Instantiate(customerPrefab);
-            Customer customerScript = customerObj.GetComponent<Customer>();
+        int spot = FindFreeCustomerSpot();
+        if (spot < 0) return;
 
-            currentCustomers[spot] = customerScript;
-            activeCustomers[spot] = true;
-            customerObj.transform.position = customerLocation[spot];
+        GameObject customerObj = Instantiate(customerPrefab, customerLocations[spot], Quaternion.identity);
+        Customer customerScript = customerObj.GetComponent<Customer>();
+
+        currentCustomers[spot] = customerScript;
+        activeCustomers[spot] = true;
+
+        Debug.Log($"Spawned customer at spot {spot}");
+    }
+
+    public void DeliverOrderToCustomer(int index, Order order)
+    {
+        if (index < 0 || index >= numCustomer || !activeCustomers[index]) return;
+
+        Customer customer = currentCustomers[index];
+        bool correct = customer.DeliverOrder(order);
+        StartCoroutine(HandleCustomerExit(index, correct));
+    }
+
+    private IEnumerator HandleCustomerExit(int index, bool correct)
+    {
+        string mood = correct ? "happy" : "angry";
+        Debug.Log($"Customer {index} is {mood} and will leave soon...");
+
+        yield return new WaitForSeconds(customerDespawnDelay);
+
+        Destroy(currentCustomers[index].gameObject);
+        currentCustomers[index] = null;
+        activeCustomers[index] = false;
+
+        Debug.Log($"Customer at spot {index} has left.");
+    }
+
+    private void HandleCustomerTimerEnd(Customer expiredCustomer)
+    {
+        for (int i = 0; i < numCustomer; i++)
+        {
+            if (currentCustomers[i] == expiredCustomer)
+            {
+                Debug.Log($"Customer {i}'s timer ended, removing them...");
+                StartCoroutine(HandleCustomerExit(i, false)); 
+                break;
+            }
         }
     }
 
-    int findFreeCustomerSpace()
+    private int FindFreeCustomerSpot()
     {
         for (int i = 0; i < numCustomer; i++)
         {
@@ -59,11 +109,9 @@ public class GameManager : MonoBehaviour
         return -1;
     }
 
-    void clearAllCustomers()
+    private void ClearAllCustomers()
     {
         for (int i = 0; i < numCustomer; i++)
-        {
             activeCustomers[i] = false;
-        }
     }
 }
