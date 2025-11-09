@@ -5,9 +5,6 @@ TextureImporter:
   - first:
       213: -1457831766178570216
     second: horns_0
-  - first:
-      213: -7415311056671595591
-    second: horns_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -121,7 +118,7 @@ TextureImporter:
         serializedVersion: 2
         x: 718
         y: 1432
-        width: 117
+        width: 612
         height: 330
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -133,28 +130,6 @@ TextureImporter:
       bones: []
       spriteID: 81065aa8bbdb4cbe0800000000000000
       internalID: -1457831766178570216
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: horns_1
-      rect:
-        serializedVersion: 2
-        x: 1213
-        y: 1432
-        width: 117
-        height: 330
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 9b32018c1e5871990800000000000000
-      internalID: -7415311056671595591
       vertices: []
       indices: 
       edges: []
@@ -174,7 +149,6 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       horns_0: -1457831766178570216
-      horns_1: -7415311056671595591
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
